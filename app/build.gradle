@@ -35,8 +35,9 @@ dependencies {
     apt 'com.squareup.dagger:dagger-compiler:1.2.2'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
-    compile 'com.squareup.retrofit:converter-moshi:2.0.0-beta1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+
+
 
     //jake
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -45,4 +46,6 @@ dependencies {
     //rx
     compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.0.1'
+
+    compile 'com.google.code.gson:gson:2.3.1'
 }
