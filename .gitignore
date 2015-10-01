@@ -1,0 +1,10 @@
+/.idea
+/TictailContacts.iml
+/challenge_info/env
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
