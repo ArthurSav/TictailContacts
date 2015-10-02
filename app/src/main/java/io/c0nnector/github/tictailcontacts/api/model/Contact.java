@@ -6,6 +6,9 @@
 package io.c0nnector.github.tictailcontacts.api.model;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
 {
   "first_name" : "Jens",
@@ -48,6 +51,7 @@ public class Contact {
   public String getColor() {
     return color;
   }
+
   public String getFirst_name() {
     return first_name;
   }
@@ -68,6 +72,27 @@ public class Contact {
   }
   public String getTitle() {
     return title;
+  }
+
+
+  /**
+   * Creates a hashmap with the contact params.
+   * @return
+   */
+  public Map<String, String> getAsMap(){
+
+    Map<String, String> params = new HashMap<>();
+
+    params.put("id", id);
+    params.put("first_name", first_name);
+    params.put("last_name", last_name);
+    params.put("image", image);
+    params.put("location", location);
+    params.put("team", team);
+    params.put("title", title);
+    params.put("color", color);
+
+    return params;
   }
 
 }
