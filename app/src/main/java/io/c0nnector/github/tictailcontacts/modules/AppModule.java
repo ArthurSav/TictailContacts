@@ -8,6 +8,8 @@ import dagger.Module;
 import dagger.Provides;
 import io.c0nnector.github.tictailcontacts.App;
 import io.c0nnector.github.tictailcontacts.MainActivity;
+import io.c0nnector.github.tictailcontacts.ui.contacts.MainView;
+import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 
 /**
  * Main module
@@ -19,7 +21,10 @@ import io.c0nnector.github.tictailcontacts.MainActivity;
         }
         ,
         injects = {
-                MainActivity.class
+                MainActivity.class,
+
+                MainView.class,
+                UrlImageView.class
         }
 )
 public class AppModule {

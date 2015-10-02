@@ -50,7 +50,7 @@ public abstract class RetroSubscriber<T> extends Subscriber<T> {
      * Converts the exception into a retrofit error
      * @param e
      */
-    public RetrofitError convertToRetrofitError(Throwable e){
+    private RetrofitError convertToRetrofitError(Throwable e){
 
         if (e instanceof RetrofitError) {
 
@@ -74,7 +74,7 @@ public abstract class RetroSubscriber<T> extends Subscriber<T> {
      * Decides what to do with a retrofit error
      * @param error
      */
-    public void filterError(RetrofitError error){
+    private void filterError(RetrofitError error){
 
         Timber.e("retrofit error: " + error.getMessage());
 

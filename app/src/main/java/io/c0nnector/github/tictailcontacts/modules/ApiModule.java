@@ -11,6 +11,7 @@ import dagger.Provides;
 import io.c0nnector.github.tictailcontacts.BuildConfig;
 import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.misc.Constants;
+import io.c0nnector.github.tictailcontacts.util.Strings;
 import retrofit.Endpoint;
 import retrofit.Endpoints;
 import retrofit.RestAdapter;
@@ -26,11 +27,12 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class ApiModule {
 
     private static final String BASE_URL = "http://192.168.1.4:5000";
+    private static final String BASE_URL2 = "http://192.168.10.74:5000";
 
     @Provides
     @Singleton
     Endpoint provideEndpoint(){
-        return Endpoints.newFixedEndpoint(BASE_URL);
+        return Endpoints.newFixedEndpoint(BASE_URL2);
     }
 
 

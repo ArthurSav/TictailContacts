@@ -39,7 +39,7 @@ public final class Dagger {
      * @param fragment
      */
     public static void inject(Fragment fragment){
-        obtain(fragment.getContext()).inject(fragment);
+        obtain(fragment.getContext().getApplicationContext()).inject(fragment);
     }
 
     /**
@@ -47,6 +47,6 @@ public final class Dagger {
      * @param view
      */
     public static void inject(View view){
-        obtain(view.getContext()).inject(view);
+        obtain(view.getContext().getApplicationContext()).inject(view);
     }
 }

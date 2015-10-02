@@ -7,16 +7,21 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.ui.BaseActivity;
+import io.c0nnector.github.tictailcontacts.ui.contacts.MainView;
 import rx.Subscriber;
 
 public class MainActivity extends BaseActivity {
 
     @Inject
     ApiService apiService;
+
+    @Bind(R.id.vMain)
+    MainView mainView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,26 +31,11 @@ public class MainActivity extends BaseActivity {
         Dagger.inject(this);
     }
 
-
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void afterViews() {
+        super.afterViews();
 
-        apiService.getContacts()
-                .subscribe(new Subscriber<List<Contact>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(List<Contact> contacts) {
-
-                    }
-                });
+        mainView.bind();
     }
+
 }
