@@ -10,9 +10,10 @@ import javax.inject.Inject;
 import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
+import io.c0nnector.github.tictailcontacts.ui.BaseActivity;
 import rx.Subscriber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Inject
     ApiService apiService;

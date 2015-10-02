@@ -21,6 +21,10 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,8 +41,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
 
-
-
     //jake
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.jakewharton.timber:timber:3.0.2'
@@ -48,4 +50,15 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
 
     compile 'com.google.code.gson:gson:2.3.1'
+
+    //recyclerview
+    compile 'com.github.c0nnector:Least:1.0.9.1'
+
+    //extras injection
+    compile 'com.f2prateek.dart:dart:2.0.0-RC1'
+    provided 'com.f2prateek.dart:dart-processor:2.0.0-RC1'
+
+    //parceler
+    compile 'org.parceler:parceler-api:1.0.3'
+    apt "org.parceler:parceler:1.0.3"
 }
