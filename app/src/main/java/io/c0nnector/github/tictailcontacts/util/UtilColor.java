@@ -15,7 +15,7 @@ public final class UtilColor {
      */
     public static int convert(String color){
 
-        int parsedColor = Color.BLACK;
+        int parsedColor = Color.WHITE;
 
         if (Strings.isNotBlank(color)) {
             parsedColor = Color.parseColor(color.contains("#")? color: "#"+color);

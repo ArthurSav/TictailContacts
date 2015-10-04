@@ -1,39 +1,42 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
+import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
 import io.c0nnector.github.tictailcontacts.util.Strings;
+import io.c0nnector.github.tictailcontacts.util.UtilAnim;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
+import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListener;
+import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
+import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
 import rx.Observable;
 
 /**
  * Contact view, edit user info
  */
-public class ViewContactEdit extends BaseRelativeLayout {
+public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener{
 
+    /**
+     * Location picker
+     */
+    LocationPicker locationPicker;
+
+    Contact contact;
 
     Resources resources;
-
-    Observable<CharSequence> firstNameObservable;
-
-    Observable<CharSequence> lastNameObservable;
-
-
-    Observable<Boolean> creditCardObservable;
 
 
     @Bind(R.id.imgAvatar)
@@ -60,6 +63,16 @@ public class ViewContactEdit extends BaseRelativeLayout {
     @Bind(R.id.txtEditTeam)
     EditText txtTeam;
 
+    @Bind(R.id.layoutTxtEditLocation)
+    TextInputLayout inputLayoutLocation;
+
+    @Bind(R.id.txtEditLocation)
+    EditText txtLocation;
+
+    @Bind(R.id.vColorPicker)
+    ColorPicker colorPicker;
+
+
     @Bind(R.id.btnChange)
     FloatingActionButton btnDone;
 
@@ -83,8 +96,14 @@ public class ViewContactEdit extends BaseRelativeLayout {
     }
 
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * Bind contact to display the info
+     *
+     * @param contact
+     */
     public void bind(Contact contact) {
+        this.contact = contact;
+        this.locationPicker = new LocationPicker(getContext(), contact);
 
         //avatar
         imgAvatar.loadContact(contact);
@@ -94,23 +113,26 @@ public class ViewContactEdit extends BaseRelativeLayout {
 
         txtTitle.setText(contact.getTitle());
         txtTeam.setText(contact.getTeam());
+        txtLocation.setText(contact.getLocation());
 
-        //header color
-        vHeader.setBackgroundColor(contact.getColorInt());
+        setHeaderColor(contact.getColorInt());
+
+        setColorPicker(contact);
     }
 
 
     /**
-     * Form Observable
-     *
+     * Contact edit form. Handles form validation
+     * <p>
      * Emmits true/false when the form is valid or not
      */
     private void setupForm() {
 
+        //name
         Observable.combineLatest(RxTextView.textChanges(txtFirst), RxTextView.textChanges(txtLast), (firstName, lastName) -> {
 
-            boolean hasFirstName = validateText(firstName, resources.getString(R.string.error_form_contact_firstname_short), inputLayoutFirst);
-            boolean hasLastName = validateText(lastName, resources.getString(R.string.error_form_contact_lastname_short), inputLayoutLast);
+            boolean hasFirstName = validateFormInput(firstName, resources.getString(R.string.error_form_contact_firstname_short), inputLayoutFirst);
+            boolean hasLastName = validateFormInput(lastName, resources.getString(R.string.error_form_contact_lastname_short), inputLayoutLast);
 
             return hasFirstName && hasLastName;
         })
@@ -118,30 +140,60 @@ public class ViewContactEdit extends BaseRelativeLayout {
                 .distinctUntilChanged()
 
                 .subscribe(aBoolean -> {
-                    Toast.makeText(getContext(), aBoolean ? "PASS" : "FAIL", Toast.LENGTH_SHORT).show();
+                    //todo - do something
                 });
 
+        //location
+        Observable<Boolean> locationClickObservable = RxView.clickEvents(txtLocation)
+                .map(viewClickEvent -> true);
+
+        Observable.merge(locationClickObservable, RxView.focusChanges(txtLocation))
+                .filter(aBoolean -> aBoolean)
+                .subscribe(aBoolean -> {
+                    locationPicker.show();
+                });
     }
 
     /**
-     * Validates text input.
+     * Validates form text input. When empty shows an error
      *
-     * When empty shows an error
-     * @param text input text
-     * @param error error to show when empty
-     * @param textInputLayout textInputLayout to be used for the error display
+     * @param text            input text
+     * @param error           message when empty
+     * @param textInputLayout displays the error
+     *
      * @return true if not empty
      */
-    private boolean validateText(CharSequence text, String error, TextInputLayout textInputLayout){
+    private boolean validateFormInput(CharSequence text, String error, TextInputLayout textInputLayout) {
 
         boolean hasText = Strings.isNotBlank(text);
 
-        //first name
-        if (!hasText) {
-            textInputLayout.setError(error);
-        }
-        else textInputLayout.setError(null);
+        textInputLayout.setError(hasText ? null : error);
 
         return hasText;
+    }
+
+    /**
+     * User theme color picker setup
+     * @param contact
+     */
+    private void setColorPicker(Contact contact){
+        colorPicker.selectColor(contact.getColorInt());
+        colorPicker.setColorChangeListener(this);
+    }
+
+    /**
+     * Header background color
+     * @param color
+     */
+    private void setHeaderColor(int color){
+
+        //header color
+        vHeader.setBackgroundColor(color);
+    }
+
+
+    @Override
+    public void onColorChange(ColorItem currentItem, ColorItem previousItem, int position) {
+        UtilAnim.animateBackgroundColorChange(vHeader, previousItem.getColor(), currentItem.getColor());
     }
 }

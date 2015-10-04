@@ -1,8 +1,13 @@
 package io.c0nnector.github.tictailcontacts.util;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.text.Layout;
 import android.view.View;
 import android.widget.TextView;
+
+import io.c0nnector.github.tictailcontacts.R;
 
 /**
  * Util to handle views
@@ -173,4 +178,30 @@ public final class UtilView {
         return false;
     }
 
+
+    /*****************************************************
+     * ---------------- * Drawable color * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    /**
+     * Changes color to a view background drawable
+     * @param view
+     * @param color
+     */
+    public static void setShapeColor(View view, int color){
+
+        Drawable background = view.getBackground();
+
+        if (background instanceof ShapeDrawable) {
+
+            ((ShapeDrawable)background).getPaint().setColor(color);
+        }
+
+        else if (background instanceof GradientDrawable) {
+            ((GradientDrawable)background).setColor(color);
+        }
+    }
 }

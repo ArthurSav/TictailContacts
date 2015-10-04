@@ -83,7 +83,7 @@
                     android:layout_height="5dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
-                    android:background="@drawable/shape_dot"/>
+                    android:background="@drawable/shape_dot_grey"/>
 
             </RelativeLayout>
 
@@ -115,7 +115,38 @@
                     android:layout_height="5dp"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="10dp"
-                    android:background="@drawable/shape_dot"/>
+                    android:background="@drawable/shape_dot_grey"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/vLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_below="@+id/vTeam"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    tools:text="Location"
+                    android:id="@+id/txtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vDot31"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15sp"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/vDot31"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shape_dot_grey"/>
             </RelativeLayout>
         </RelativeLayout>
 
@@ -137,7 +168,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="-10dp"
         android:clickable="true"
         android:src="@drawable/ic_mode_edit_white_36dp"
         app:layout_anchor="@id/vHeader"

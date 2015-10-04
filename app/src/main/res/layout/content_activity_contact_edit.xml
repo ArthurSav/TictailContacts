@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="First name"
-                        />
+                        android:textSize="15sp"/>
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -87,75 +87,95 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Last name"
-                        />
+                        android:textSize="15sp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
                 <RelativeLayout
                     android:id="@+id/vDot1"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape_dot">
+                    >
                 </RelativeLayout>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/vDetails"
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layoutTxtTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vName"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp">
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/layoutTxtTitle"
+                <EditText
+                    android:id="@+id/txtEditTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toLeftOf="@+id/vDot2"
-                    android:layout_toStartOf="@+id/vDot2">
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Title"
+                    android:minWidth="150dp"
+                    android:textSize="15sp"/>
 
-                    <EditText
-                        android:id="@+id/txtEditTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Title"
-                        />
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layoutTxtEditTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutTxtTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/layouttxtEditTeam"
+                <EditText
+                    android:id="@+id/txtEditTeam"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/vDot2"
-                    android:layout_toRightOf="@+id/vDot2">
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Team"
+                    android:minWidth="150dp"
+                    android:textSize="15sp"/>
 
-                    <EditText
-                        android:id="@+id/txtEditTeam"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:hint="Team"
-                        />
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layoutTxtEditLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutTxtEditTeam"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp">
 
-                <RelativeLayout
-                    android:id="@+id/vDot2"
-                    android:layout_width="7dp"
-                    android:layout_height="7dp"
-                    android:layout_centerHorizontal="true"
+                <EditText
+                    android:editable="false"
+                    android:id="@+id/txtEditLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Location"
+                    android:minWidth="150dp"
+                    android:textSize="15sp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layoutTxtEditLocation"
+                android:layout_centerHorizontal="true">
+
+                <io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vColorPicker"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/shape_dot"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"/>
             </RelativeLayout>
 
 
@@ -172,9 +192,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:clickable="true"
+        app:backgroundTint="@color/green_400"
         android:src="@drawable/ic_done_white_36dp"
         app:layout_anchor="@id/vHeader"
         app:layout_anchorGravity="bottom|right|end"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
 
