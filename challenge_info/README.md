@@ -1,4 +1,4 @@
-# Frontend Recruiting Task
+#Recruiting Task
 
 ## The story
 At Tictail we organize bi-annual Demo Weeks where we hack on creative
