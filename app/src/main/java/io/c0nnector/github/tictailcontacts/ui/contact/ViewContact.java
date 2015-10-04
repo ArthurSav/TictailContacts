@@ -8,13 +8,11 @@ import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
-import rx.Observable;
 
 /**
  * Contact view handler
@@ -64,16 +62,14 @@ public class ViewContact extends BaseRelativeLayout {
 
 
     /**
-     * Bind contact to view
+     * Bind tmpContact to view
      * @param contact
      */
     public void bind(Contact contact){
         this.contact = contact;
 
         showDisplayMode();
-
     }
-
 
 
     /**
@@ -82,28 +78,26 @@ public class ViewContact extends BaseRelativeLayout {
     private void setupViews(){
 
         //display
-        viewContactDisplay = new ViewContactInfo(getContext());
+        viewContactDisplay = new ViewContactInfo(getContext(), onEditClickListener);
 
         //edit
-        viewContactEdit = new ViewContactEdit(getContext());
-
-
-        viewContactEdit.btnDone.setOnClickListener(onDoneClick);
-        viewContactDisplay.btnOnEdit.setOnClickListener(onEditClick);
+        viewContactEdit = new ViewContactEdit(getContext(), onSaveChangesListener);
     }
 
 
     /**
      * OnClick listener for the 'edit' button
      */
-    private OnClickListener onEditClick = v -> {
-        showEditMode();
-    };
+    private OnClickListener onEditClickListener = v -> showEditMode();
 
     /**
-     * OnClick listener for the 'done' button
+     * Listener for the 'save changes' button
      */
-    private OnClickListener onDoneClick = v -> {
+    private SaveChangesClickListener onSaveChangesListener = tmpContact -> {
+
+        //add tmp changes to the contact object
+        this.contact = tmpContact;
+
         showDisplayMode();
     };
 

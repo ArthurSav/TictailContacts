@@ -23,4 +23,13 @@ public final class UtilColor {
 
         return parsedColor;
     }
+
+    /**
+     * Converts an int color to hex string
+     * @param color
+     * @return
+     */
+    public static String convert(int color){
+        return String.format("#%06X", (0xFFFFFF & color));
+    }
 }

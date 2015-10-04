@@ -9,9 +9,16 @@ import java.util.TimeZone;
 
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.util.Strings;
+import io.c0nnector.github.tictailcontacts.util.Val;
+import timber.log.Timber;
 
 
 public final class LocationPicker {
+
+    /**
+     * Holds the selected position in the list
+     */
+    private int lastSelected = -1;
 
     /**
      * A list of timezone/location ids
@@ -37,16 +44,17 @@ public final class LocationPicker {
      * Shows a single choice alert dialog with locations
      * Current user location is preselected, if available
      */
-    public void show() {
+    public void show(LocationChangeListener locationListener) {
 
-        int currentLocationPositionInTheList = convertStringToTimezonePosition(contact.getLocation());
+        //last selected list position
+        lastSelected = lastSelected == -1? convertStringToTimezonePosition(contact.getLocation()): lastSelected;
 
         AlertDialog alertDialog = new AlertDialog.Builder(context)
-                .setSingleChoiceItems(timezoneIds, currentLocationPositionInTheList, (dialog, which) -> {
-
+                .setSingleChoiceItems(timezoneIds, lastSelected, (dialog, which) -> {
+                    lastSelected = which;
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
-
+                    if (Val.notNull(locationListener)) locationListener.onLocationChange(timezoneIds[lastSelected], lastSelected);
                 })
                 .setNegativeButton("CANCEL", (dialog, which) -> {
 
@@ -84,5 +92,13 @@ public final class LocationPicker {
      */
     private String convertPositionToTimezoneString(int position){
         return position <= timezoneIds.length? timezoneIds[position] : "";
+    }
+
+
+    /**
+     * Called when the user changes his profile location
+     */
+    public interface LocationChangeListener {
+        void onLocationChange(String location, int position);
     }
 }

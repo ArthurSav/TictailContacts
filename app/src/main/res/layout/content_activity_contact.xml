@@ -28,7 +28,7 @@
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/shape_image_round_placeholder_no_border"
+                android:background="@drawable/shape_image_round_placeholder"
                 android:transitionName="@string/transitionImage"
                 tools:background="@drawable/shape_image_round_placeholder"/>
 

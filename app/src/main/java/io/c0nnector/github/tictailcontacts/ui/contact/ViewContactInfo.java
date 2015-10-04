@@ -19,6 +19,7 @@ import io.c0nnector.github.tictailcontacts.views.UrlImageView;
  */
 public class ViewContactInfo extends RelativeLayout {
 
+
     @Bind(R.id.txtName)
     TextView txtName;
 
@@ -50,22 +51,25 @@ public class ViewContactInfo extends RelativeLayout {
     FloatingActionButton btnOnEdit;
 
 
+
     /**
      * Constructor
      * @param context
      */
-    public ViewContactInfo(Context context) {
+    public ViewContactInfo(Context context, OnClickListener onEditButtonListener) {
         super(context);
 
         if (!isInEditMode()) {
             View v = inflate(getContext(), R.layout.content_activity_contact, this);
             ButterKnife.bind(this, v);
+
+            this.btnOnEdit.setOnClickListener(onEditButtonListener);
         }
     }
 
 
     /**
-     * Bind contact to show the info
+     * Bind tmpContact to show the info
      * @param contact
      */
     public void bind(Contact contact){

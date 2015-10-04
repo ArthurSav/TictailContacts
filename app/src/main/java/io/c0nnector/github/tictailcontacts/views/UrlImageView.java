@@ -18,6 +18,7 @@ import io.c0nnector.github.tictailcontacts.util.Measure;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilColor;
 import io.c0nnector.github.tictailcontacts.util.picasso.CircleBorderTransformation;
+import io.c0nnector.github.tictailcontacts.util.picasso.CircleTransform;
 
 
 /**
@@ -83,6 +84,10 @@ public class UrlImageView extends ImageView {
      * @param url
      */
     private String getFilteredUrl(String url) {
+
+        //todo - find a solution for the gravatar issue
+        if (url.contains("gravatar")) return "http://klfdnsgfsngkl.com";
+
         return Strings.isBlank(url) ? "http://i.imgur.com/o7q6k5Q.png" : url;
     }
 
@@ -94,32 +99,19 @@ public class UrlImageView extends ImageView {
      *
      ****************************************************/
 
-    public void loadContact(Contact contact){
-
-        loadContact(contact, 3, contact.getColorInt());
-    }
-
-
-    public void loadContact(Contact contact, int color){
-        loadContact(contact, 3, color);
-    }
 
     /**
      * Loads user avatar
      * @param contact contact object
-     * @param border dimensions
-     * @param color border color
      */
-    public void loadContact(Contact contact, int border, int color){
+    public void loadContact(Contact contact){
 
         //image dimensions
         int dimens = Measure.dpToPx(Constants.DIMEN_IMAGE_CONTACT);
 
         picasso.load(getFilteredUrl(contact.getImage()))
                 .resize(dimens, dimens)
-                .placeholder(R.drawable.shape_image_round_placeholder)
-                .error(R.drawable.ic_placeholder_halloween)
-                .transform(new CircleBorderTransformation(border, color))
+                .transform(new CircleTransform())
                 .into(this);
     }
 

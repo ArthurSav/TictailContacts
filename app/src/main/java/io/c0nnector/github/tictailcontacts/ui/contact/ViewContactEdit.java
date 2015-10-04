@@ -12,6 +12,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
@@ -27,12 +28,19 @@ import rx.Observable;
 /**
  * Contact view, edit user info
  */
-public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener{
+public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener{
 
     /**
      * Location picker
      */
     LocationPicker locationPicker;
+
+    SaveChangesClickListener saveChangesListener;
+
+    /**
+     * Stores tmp changes
+     */
+    Contact tmpContact = new Contact();
 
     Contact contact;
 
@@ -76,12 +84,19 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     @Bind(R.id.btnChange)
     FloatingActionButton btnDone;
 
+
+    @OnClick(R.id.btnChange)
+    public void oSaveChangesClick(){
+        saveChangesListener.onSaveChangesClick(tmpContact);
+    }
+
+
     /**
      * Constructor
      *
      * @param context
      */
-    public ViewContactEdit(Context context) {
+    public ViewContactEdit(Context context, SaveChangesClickListener listener) {
         super(context);
 
         if (!isInEditMode()) {
@@ -90,6 +105,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
             ButterKnife.bind(this, v);
 
             this.resources = getResources();
+            this.saveChangesListener = listener;
 
             setupForm();
         }
@@ -97,12 +113,13 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
 
     /**
-     * Bind contact to display the info
+     * Bind tmpContact to display the info
      *
      * @param contact
      */
     public void bind(Contact contact) {
         this.contact = contact;
+        this.tmpContact = contact.clone();
         this.locationPicker = new LocationPicker(getContext(), contact);
 
         //avatar
@@ -117,8 +134,16 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
         setHeaderColor(contact.getColorInt());
 
-        setColorPicker(contact);
+        setupColorPicker(contact);
     }
+
+
+    /*****************************************************
+     * ---------------- * Form * --------------------
+     *
+     *
+     *
+     ****************************************************/
 
 
     /**
@@ -131,8 +156,13 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         //name
         Observable.combineLatest(RxTextView.textChanges(txtFirst), RxTextView.textChanges(txtLast), (firstName, lastName) -> {
 
+            //check input
             boolean hasFirstName = validateFormInput(firstName, resources.getString(R.string.error_form_contact_firstname_short), inputLayoutFirst);
             boolean hasLastName = validateFormInput(lastName, resources.getString(R.string.error_form_contact_lastname_short), inputLayoutLast);
+
+            //save changes to tmp contact
+            tmpContact.setFirst_name(firstName.toString());
+            tmpContact.setLast_name(lastName.toString());
 
             return hasFirstName && hasLastName;
         })
@@ -140,7 +170,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
                 .distinctUntilChanged()
 
                 .subscribe(aBoolean -> {
-                    //todo - do something
+
                 });
 
         //location
@@ -150,7 +180,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         Observable.merge(locationClickObservable, RxView.focusChanges(txtLocation))
                 .filter(aBoolean -> aBoolean)
                 .subscribe(aBoolean -> {
-                    locationPicker.show();
+                    locationPicker.show(this);
                 });
     }
 
@@ -172,11 +202,20 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         return hasText;
     }
 
+
+    /*****************************************************
+     * ------------ * Theme color * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
     /**
      * User theme color picker setup
      * @param contact
      */
-    private void setColorPicker(Contact contact){
+    private void setupColorPicker(Contact contact){
+
         colorPicker.selectColor(contact.getColorInt());
         colorPicker.setColorChangeListener(this);
     }
@@ -191,9 +230,37 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         vHeader.setBackgroundColor(color);
     }
 
+    /*****************************************************
+     * ---------------- * Changes * --------------------
+     *
+     *
+     *
+     ****************************************************/
 
+    /**
+     * Called when the user changes his location
+     * @param location
+     * @param position
+     */
+    @Override
+    public void onLocationChange(String location, int position) {
+        this.txtLocation.setText(location);
+
+        //save tmp location
+        tmpContact.setLocation(location);
+    }
+
+    /**
+     * Theme color change event
+     * @param currentItem
+     * @param previousItem
+     * @param position
+     */
     @Override
     public void onColorChange(ColorItem currentItem, ColorItem previousItem, int position) {
         UtilAnim.animateBackgroundColorChange(vHeader, previousItem.getColor(), currentItem.getColor());
+
+        //save tmp color
+        tmpContact.setColor(currentItem.getColor());
     }
 }

@@ -14,12 +14,13 @@
 
         <io.c0nnector.github.tictailcontacts.views.UrlImageView
             android:transitionName="@string/transitionImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:id="@+id/imgAvatar"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            tools:background="@color/grey_800"/>
+            tools:background="@color/grey_800"
+            android:background="@drawable/shape_image_round_placeholder_small"/>
 
         <TextView
             android:layout_width="wrap_content"

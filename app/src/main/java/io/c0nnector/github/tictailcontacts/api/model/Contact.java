@@ -80,8 +80,43 @@ public class Contact {
     return title;
   }
 
+  public void setColor(String color) {
+    this.color = color;
+  }
 
-    public String getName(){
+    public void setColor(int color) {
+        this.color = UtilColor.convert(color);
+    }
+
+  public void setFirst_name(String first_name) {
+    this.first_name = first_name;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public void setLast_name(String last_name) {
+    this.last_name = last_name;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public void setTeam(String team) {
+    this.team = team;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getName(){
         return first_name + " " + last_name;
     }
 
@@ -108,5 +143,21 @@ public class Contact {
 
     return params;
   }
+
+
+    public Contact clone(){
+
+        Contact contact = new Contact();
+        contact.color = this.color;
+        contact.first_name = this.first_name;
+        contact.id = this.id;
+        contact.image = this.image;
+        contact.last_name = this.last_name;
+        contact.location = this.location;
+        contact.team = this.team;
+        contact.title = this.title;
+
+        return contact;
+    }
 
 }

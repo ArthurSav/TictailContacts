@@ -20,7 +20,6 @@
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@color/amber_300"
             tools:background="@color/amber_300">
 
             <io.c0nnector.github.tictailcontacts.views.UrlImageView
@@ -29,7 +28,7 @@
                 android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/shape_image_round_placeholder_no_border"
+                android:background="@drawable/shape_image_round_placeholder"
                 android:transitionName="@string/transitionImage"
                 tools:background="@drawable/shape_image_round_placeholder"/>
 
