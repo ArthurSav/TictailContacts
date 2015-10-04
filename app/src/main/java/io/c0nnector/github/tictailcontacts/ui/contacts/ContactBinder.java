@@ -19,7 +19,7 @@ public class ContactBinder extends Binder<ContactViewHolder, Contact> {
     public void onBindViewHolder(ContactViewHolder contactViewHolder, Contact contact, int i) {
 
         //user avatar
-        contactViewHolder.imgAvatar.loadContactSmall(contact);
+        contactViewHolder.imgAvatar.loadContact(contact);
 
         //first name
         contactViewHolder.txtName.setText(contact.getFirst_name());

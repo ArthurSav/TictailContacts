@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Tictail Contacts</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_contact">Contact</string>
+
+
+    <!--transitions-->
+    <string name="transitionImage">transitionImage</string>
+
+
+    <!--form errors-->
+    <string name="error_form_contact_firstname_short">First name too short</string>
+    <string name="error_form_contact_lastname_short">Last name too short</string>
+
+
+
 </resources>
+

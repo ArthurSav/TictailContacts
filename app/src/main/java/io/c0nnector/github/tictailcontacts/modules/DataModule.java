@@ -35,12 +35,7 @@ public class DataModule {
 
         return new Picasso.Builder(app)
                 .downloader(new OkHttpDownloader(client))
-                .listener(new Picasso.Listener() {
-                    @Override
-                    public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                        Timber.e(exception, "Failed to load image: %s", uri);
-                    }
-                })
+                .listener((picasso, uri, exception) -> Timber.e(exception, "Failed to load image: %s", uri))
                 .build();
     }
 }

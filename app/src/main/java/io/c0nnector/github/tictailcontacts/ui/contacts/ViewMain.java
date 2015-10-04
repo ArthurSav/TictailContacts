@@ -1,6 +1,8 @@
 package io.c0nnector.github.tictailcontacts.ui.contacts;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 
@@ -18,6 +20,7 @@ import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.api.RetroSubscriber;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
+import io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact;
 import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecoration;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import retrofit.RetrofitError;
@@ -27,7 +30,9 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * View handler for the main activity
  */
-public class MainView extends BaseRelativeLayout {
+public class ViewMain extends BaseRelativeLayout {
+
+    Activity activity;
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -41,7 +46,7 @@ public class MainView extends BaseRelativeLayout {
 
     LeastAdapter adapter;
 
-    public MainView(Context context, AttributeSet attrs) {
+    public ViewMain(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         if (!isInEditMode()) {
@@ -59,7 +64,8 @@ public class MainView extends BaseRelativeLayout {
     /**
      * Binds the view
      */
-    public void bind(){
+    public void bind(AppCompatActivity activity){
+        this.activity = activity;
 
         requestContacts();
     }
@@ -98,6 +104,7 @@ public class MainView extends BaseRelativeLayout {
      * Contacts list item listener
      */
     private ListItemListener<ContactViewHolder, Contact> listItemListenerContact = (contactViewHolder, contact, i) -> {
+        ActivityContact.start(activity, contact, contactViewHolder.imgAvatar);
     };
 
     /*****************************************************

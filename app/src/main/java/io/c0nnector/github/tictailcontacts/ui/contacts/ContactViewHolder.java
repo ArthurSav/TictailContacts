@@ -16,7 +16,7 @@ public class ContactViewHolder extends BaseViewHolder {
     @Bind(R.id.imgAvatar)
     UrlImageView imgAvatar;
 
-    @Bind(R.id.txtName)
+    @Bind(R.id.txtFirst)
     TextView txtName;
 
     public ContactViewHolder(View itemView) {

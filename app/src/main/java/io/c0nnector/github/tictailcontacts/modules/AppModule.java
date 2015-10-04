@@ -7,8 +7,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.c0nnector.github.tictailcontacts.App;
-import io.c0nnector.github.tictailcontacts.MainActivity;
-import io.c0nnector.github.tictailcontacts.ui.contacts.MainView;
+import io.c0nnector.github.tictailcontacts.ui.contacts.MainActivity;
+import io.c0nnector.github.tictailcontacts.ui.contacts.ViewMain;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 
 /**
@@ -23,7 +23,7 @@ import io.c0nnector.github.tictailcontacts.views.UrlImageView;
         injects = {
                 MainActivity.class,
 
-                MainView.class,
+                ViewMain.class,
                 UrlImageView.class
         }
 )

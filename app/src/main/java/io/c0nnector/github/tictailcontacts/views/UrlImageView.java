@@ -3,7 +3,6 @@ package io.c0nnector.github.tictailcontacts.views;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -18,7 +17,7 @@ import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.util.Measure;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilColor;
-import io.c0nnector.github.tictailcontacts.util.picasso.CircleTransformation;
+import io.c0nnector.github.tictailcontacts.util.picasso.CircleBorderTransformation;
 
 
 /**
@@ -74,21 +73,6 @@ public class UrlImageView extends ImageView {
     }
 
 
-    public void loadContactSmall(Contact contact){
-
-        //image dimensions
-        int dimens = Measure.dpToPx(Constants.DIMEN_IMAGE_CONTACT_SMALL);
-
-        //user border color
-        int color = UtilColor.convert(contact.getColor());
-
-        picasso.load(getFilteredUrl(contact.getImage()))
-                .resize(dimens, dimens)
-                .placeholder(R.drawable.shape_image_round_placeholder)
-                .transform(new CircleTransformation(3, color))
-                .into(this);
-    }
-
 
     public Picasso getPicasso() {
         return picasso;
@@ -99,7 +83,44 @@ public class UrlImageView extends ImageView {
      * @param url
      */
     private String getFilteredUrl(String url) {
-        return Strings.isBlank(url) ? "http://www.123.com" : url;
+        return Strings.isBlank(url) ? "http://i.imgur.com/o7q6k5Q.png" : url;
+    }
+
+
+    /*****************************************************
+     * ---------------- * Contact * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    public void loadContact(Contact contact){
+
+        loadContact(contact, 3, contact.getColorInt());
+    }
+
+
+    public void loadContact(Contact contact, int color){
+        loadContact(contact, 3, color);
+    }
+
+    /**
+     * Loads user avatar
+     * @param contact contact object
+     * @param border dimensions
+     * @param color border color
+     */
+    public void loadContact(Contact contact, int border, int color){
+
+        //image dimensions
+        int dimens = Measure.dpToPx(Constants.DIMEN_IMAGE_CONTACT);
+
+        picasso.load(getFilteredUrl(contact.getImage()))
+                .resize(dimens, dimens)
+                .placeholder(R.drawable.shape_image_round_placeholder)
+                .error(R.drawable.ic_placeholder_halloween)
+                .transform(new CircleBorderTransformation(border, color))
+                .into(this);
     }
 
 }

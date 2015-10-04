@@ -13,13 +13,14 @@ import io.c0nnector.github.tictailcontacts.util.Measure;
 /**
  * Circle transformation for picasso with border
  */
-public class CircleTransformation implements Transformation {
-
-    private  int BORDER_COLOR = Color.WHITE;
-    private  int BORDER_RADIUS = 5;
+public class CircleBorderTransformation implements Transformation {
 
 
-    public CircleTransformation(int borderRadius, int borderColor) {
+    private int BORDER_COLOR = Color.WHITE;
+    private int BORDER_RADIUS = 5;
+
+
+    public CircleBorderTransformation(int borderRadius, int borderColor) {
         this.BORDER_RADIUS = Measure.dpToPx(borderRadius);
         this.BORDER_COLOR = borderColor;
     }

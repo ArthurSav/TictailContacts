@@ -21,4 +21,8 @@ public final class Strings {
   public static String truncateAt(String string, int length) {
     return string.length() > length ? string.substring(0, length) : string;
   }
+
+  public static String removeSpaces(String string){
+    return isNotBlank(string) ? string.replace(" ", ""): "";
+  }
 }

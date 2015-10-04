@@ -6,8 +6,13 @@
 package io.c0nnector.github.tictailcontacts.api.model;
 
 
+import org.parceler.Parcel;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import io.c0nnector.github.tictailcontacts.util.Strings;
+import io.c0nnector.github.tictailcontacts.util.UtilColor;
 
 /**
 {
@@ -22,6 +27,7 @@ import java.util.Map;
 }
  */
 
+@Parcel
 public class Contact {
 
   
@@ -74,6 +80,14 @@ public class Contact {
     return title;
   }
 
+
+    public String getName(){
+        return first_name + " " + last_name;
+    }
+
+    public int getColorInt(){
+        return UtilColor.convert(color);
+    }
 
   /**
    * Creates a hashmap with the contact params.

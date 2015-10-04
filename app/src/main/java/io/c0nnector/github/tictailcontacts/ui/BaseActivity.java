@@ -61,6 +61,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         bindViews();
 
+        initVariables();
+
         validate();
 
         afterViews();

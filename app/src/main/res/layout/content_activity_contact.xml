@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/vCoordinator"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/vWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
+
+        <RelativeLayout
+            android:id="@+id/vHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/relativeLayout"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            tools:background="@color/amber_300">
+
+            <io.c0nnector.github.tictailcontacts.views.UrlImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_image_round_placeholder_no_border"
+                android:transitionName="@string/transitionImage"
+                tools:background="@drawable/shape_image_round_placeholder"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/vInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                tools:text="User name"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black"
+                android:textSize="24sp"/>
+
+            <RelativeLayout
+                android:id="@+id/vTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vDot12"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    tools:text="Title"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15sp"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/vDot12"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shape_dot"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/vTeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtTeam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vDot21"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    tools:text="Team"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15sp"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/vDot21"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/shape_dot"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="-10dp"
+        android:clickable="true"
+        android:src="@drawable/ic_mode_edit_white_36dp"
+        app:layout_anchor="@id/vHeader"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
+
