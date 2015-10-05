@@ -2,7 +2,7 @@ package io.c0nnector.github.tictailcontacts.views.color_picker;
 
 
 import android.content.Context;
-import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
 
@@ -22,7 +22,7 @@ public class ColorPicker extends LeastView {
 
     ColorChangeListener colorChangeListener;
 
-    private int colors[] = {Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GREEN, Color.RED, Color.YELLOW, Color.MAGENTA, Color.GRAY, Color.RED};
+    private int colors[] = Colors.asList();
 
     LeastAdapter leastAdapter;
 
@@ -149,13 +149,12 @@ public class ColorPicker extends LeastView {
      * @param position list position
      * @param isSelected if true will mark the placed color as selected
      */
-    public void replaceColor(int color, int position, boolean isSelected){
+    public void replaceColor(@ColorInt int color, int position, boolean isSelected){
 
         if (position <= leastAdapter.getItemPositions()) {
             leastAdapter.replace(new ColorItem(color, isSelected), position);
         }
     }
-
 
     /**
      * Will try to match a color from the list and select it.
@@ -163,7 +162,7 @@ public class ColorPicker extends LeastView {
      * @param color color to replace with
      * @return position in the list we replaced
      */
-    public int selectColor(int color){
+    public int selectColor(@ColorInt int color){
 
         for (int i = 0; i < colors.length; i++) {
 

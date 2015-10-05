@@ -6,6 +6,8 @@
 package io.c0nnector.github.tictailcontacts.api.model;
 
 
+import android.support.annotation.ColorInt;
+
 import org.parceler.Parcel;
 
 import java.util.HashMap;
@@ -84,7 +86,7 @@ public class Contact {
     this.color = color;
   }
 
-    public void setColor(int color) {
+    public void setColor(@ColorInt int color) {
         this.color = UtilColor.convert(color);
     }
 

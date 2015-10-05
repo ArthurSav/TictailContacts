@@ -24,15 +24,13 @@ import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListene
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
 import rx.Observable;
+import rx.functions.Action1;
 
 /**
- * Contact view, edit user info
+ * Contact view, edit user info.
  */
 public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener{
 
-    /**
-     * Location picker
-     */
     LocationPicker locationPicker;
 
     SaveChangesClickListener saveChangesListener;
@@ -160,9 +158,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
             boolean hasFirstName = validateFormInput(firstName, resources.getString(R.string.error_form_contact_firstname_short), inputLayoutFirst);
             boolean hasLastName = validateFormInput(lastName, resources.getString(R.string.error_form_contact_lastname_short), inputLayoutLast);
 
-            //save changes to tmp contact
-            tmpContact.setFirst_name(firstName.toString());
-            tmpContact.setLast_name(lastName.toString());
+            onNameChange(firstName.toString(), lastName.toString());
 
             return hasFirstName && hasLastName;
         })
@@ -181,6 +177,18 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
                 .filter(aBoolean -> aBoolean)
                 .subscribe(aBoolean -> {
                     locationPicker.show(this);
+                });
+
+        //team
+        RxTextView.textChanges(txtTeam)
+                .subscribe(team -> {
+                    onTeamChange(team.toString());
+                });
+
+        //title
+        RxTextView.textChanges(txtTitle)
+                .subscribe(title -> {
+                    onTitleChange(title.toString());
                 });
     }
 
@@ -236,6 +244,21 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
      *
      *
      ****************************************************/
+
+    public void onNameChange(String firstName, String lastName){
+
+        //save changes to tmp contact
+        tmpContact.setFirst_name(firstName);
+        tmpContact.setLast_name(lastName);
+    }
+
+    public void onTitleChange(String title){
+        tmpContact.setTitle(title);
+    }
+
+    public void onTeamChange(String team){
+        tmpContact.setTeam(team);
+    }
 
     /**
      * Called when the user changes his location
