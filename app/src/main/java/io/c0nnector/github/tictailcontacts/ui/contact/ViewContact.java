@@ -15,29 +15,32 @@ import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 
 /**
- * Contact view handler
+ * Main contact view. Handles view states
+ *
+ * @see ViewContactInfo
+ * @see ViewContactEdit
  */
-public class ViewContact extends BaseRelativeLayout {
+public class ViewContact extends BaseRelativeLayout implements SaveChangesListener,EditButtonListener{
 
     Contact contact;
 
     /**
-     * View in display mode
+     * Display mode view
      */
     ViewContactInfo viewContactDisplay;
 
     /**
-     * View in edit mode
+     * Edit mode view
      */
     ViewContactEdit viewContactEdit;
 
     /**
-     * Transition scene to show the 'display info' view
+     * Display mode, transition scene
      */
     Scene sceneDisplay;
 
     /**
-     * Transition scene to show the 'edit info' view
+     * Edit mode, transition scene
      */
     Scene sceneEdit;
 
@@ -60,9 +63,18 @@ public class ViewContact extends BaseRelativeLayout {
         }
     }
 
+    private void setupViews(){
+
+        //display
+        viewContactDisplay = new ViewContactInfo(getContext(), this);
+
+        //edit
+        viewContactEdit = new ViewContactEdit(getContext(), this);
+    }
+
 
     /**
-     * Bind tmpContact to view
+     * Bind contact to view
      * @param contact
      */
     public void bind(Contact contact){
@@ -71,39 +83,36 @@ public class ViewContact extends BaseRelativeLayout {
         showDisplayMode();
     }
 
+    /*****************************************************
+     * ---------------- * Listeners * --------------------
+     *
+     *
+     *
+     ****************************************************/
 
-    /**
-     * Init info & edit edit view
-     */
-    private void setupViews(){
-
-        //display
-        viewContactDisplay = new ViewContactInfo(getContext(), onEditClickListener);
-
-        //edit
-        viewContactEdit = new ViewContactEdit(getContext(), onSaveChangesListener);
+    @Override
+    public void onEditClick() {
+        showEditMode();
     }
 
-
-    /**
-     * OnClick listener for the 'edit' button
-     */
-    private OnClickListener onEditClickListener = v -> showEditMode();
-
-    /**
-     * Listener for the 'save changes' button
-     */
-    private SaveChangesClickListener onSaveChangesListener = tmpContact -> {
+    @Override
+    public void onSaveChangesClick(Contact tmpContact) {
 
         //add tmp changes to the contact object
         this.contact = tmpContact;
 
         showDisplayMode();
-    };
+    }
+
+    /*****************************************************
+     * ---------------- * Scenes * --------------------
+     *
+     *
+     *
+     ****************************************************/
 
 
-
-    //todo - support transitions for previous apis
+    //todo - support previous apis
     private void showEditMode(){
 
         viewContactEdit.bind(contact);

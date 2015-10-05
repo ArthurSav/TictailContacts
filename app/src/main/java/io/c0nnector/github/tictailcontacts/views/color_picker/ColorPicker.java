@@ -20,11 +20,11 @@ import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecorat
  */
 public class ColorPicker extends LeastView {
 
-    ColorChangeListener colorChangeListener;
+    private ColorChangeListener colorChangeListener;
 
     private int colors[] = Colors.asList();
 
-    LeastAdapter leastAdapter;
+    private LeastAdapter leastAdapter;
 
     /**
      * Constructor
@@ -90,7 +90,7 @@ public class ColorPicker extends LeastView {
     };
 
     /*****************************************************
-     * ---------------- * Setters/getters * --------------------
+     * ----------- * Getters/Setters * --------------------
      *
      *
      *

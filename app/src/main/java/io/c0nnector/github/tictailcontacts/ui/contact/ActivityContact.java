@@ -43,21 +43,20 @@ public class ActivityContact extends BaseActivity {
 
     /*****************************************************
      * ---------------- * Intents * --------------------
-     *
-     *
-     *
      ****************************************************/
 
     public static void start(Activity activity, Contact contact) {
         Intents.with(activity, ActivityContact.class)
+                .extraParcel("contact", contact)
                 .open();
     }
 
     /**
-     * Creates an activity transition
+     * Activity transition
+     *
      * @param activity
-     * @param contact
-     * @param imgAvatar
+     * @param contact   contact to display
+     * @param imgAvatar image to animate across activities
      */
     public static void start(Activity activity, Contact contact, ImageView imgAvatar) {
 

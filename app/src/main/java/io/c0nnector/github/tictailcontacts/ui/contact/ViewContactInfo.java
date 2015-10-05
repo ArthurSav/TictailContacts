@@ -51,25 +51,25 @@ public class ViewContactInfo extends RelativeLayout {
     FloatingActionButton btnOnEdit;
 
 
-
     /**
      * Constructor
      * @param context
+     * @param listener edit button listener
      */
-    public ViewContactInfo(Context context, OnClickListener onEditButtonListener) {
+    public ViewContactInfo(Context context, EditButtonListener listener) {
         super(context);
 
         if (!isInEditMode()) {
             View v = inflate(getContext(), R.layout.content_activity_contact, this);
             ButterKnife.bind(this, v);
 
-            this.btnOnEdit.setOnClickListener(onEditButtonListener);
+            this.btnOnEdit.setOnClickListener(v1 -> listener.onEditClick());
         }
     }
 
 
     /**
-     * Bind tmpContact to show the info
+     * Bind contact to view
      * @param contact
      */
     public void bind(Contact contact){

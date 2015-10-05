@@ -12,7 +12,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
@@ -24,16 +23,18 @@ import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListene
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
 import rx.Observable;
-import rx.functions.Action1;
 
 /**
  * Contact view, edit user info.
  */
-public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener{
+public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener {
+
+    /**
+     * Keeps form state
+     */
+    protected boolean isFormValid;
 
     LocationPicker locationPicker;
-
-    SaveChangesClickListener saveChangesListener;
 
     /**
      * Stores tmp changes
@@ -78,23 +79,17 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     @Bind(R.id.vColorPicker)
     ColorPicker colorPicker;
 
-
     @Bind(R.id.btnChange)
     FloatingActionButton btnDone;
-
-
-    @OnClick(R.id.btnChange)
-    public void oSaveChangesClick(){
-        saveChangesListener.onSaveChangesClick(tmpContact);
-    }
 
 
     /**
      * Constructor
      *
      * @param context
+     * @param listener save changes listener
      */
-    public ViewContactEdit(Context context, SaveChangesClickListener listener) {
+    public ViewContactEdit(Context context, SaveChangesListener listener) {
         super(context);
 
         if (!isInEditMode()) {
@@ -103,7 +98,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
             ButterKnife.bind(this, v);
 
             this.resources = getResources();
-            this.saveChangesListener = listener;
+            this.btnDone.setOnClickListener(v1 -> listener.onSaveChangesClick(tmpContact));
 
             setupForm();
         }
@@ -111,8 +106,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
 
     /**
-     * Bind tmpContact to display the info
-     *
+     * Bind contact to view
      * @param contact
      */
     public void bind(Contact contact) {
@@ -146,12 +140,23 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * Contact edit form. Handles form validation
-     * <p>
-     * Emmits true/false when the form is valid or not
+     *
+     * Form is valid when:
+     * - Fist name & last name are not empty
      */
     private void setupForm() {
 
-        //name
+        observeNameChanges();
+
+        observeLocationField();
+
+        observeTextChanges();
+    }
+
+
+    private void observeNameChanges(){
+
+        //filter name input
         Observable.combineLatest(RxTextView.textChanges(txtFirst), RxTextView.textChanges(txtLast), (firstName, lastName) -> {
 
             //check input
@@ -165,11 +170,18 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
                 //emmit only when the state changes
                 .distinctUntilChanged()
 
-                .subscribe(aBoolean -> {
+                .subscribe(valid -> {
 
+                    this.isFormValid = valid;
                 });
+    }
 
-        //location
+    /**
+     * Observe click & touch events for the location field
+     */
+    private void observeLocationField(){
+
+        //Invoke location picker when the field is focused/clicked
         Observable<Boolean> locationClickObservable = RxView.clickEvents(txtLocation)
                 .map(viewClickEvent -> true);
 
@@ -178,6 +190,12 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
                 .subscribe(aBoolean -> {
                     locationPicker.show(this);
                 });
+    }
+
+    /**
+     * Other text changes in the form
+     */
+    private void observeTextChanges(){
 
         //team
         RxTextView.textChanges(txtTeam)
@@ -210,6 +228,9 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         return hasText;
     }
 
+    private boolean isFormValid(){
+        return isFormValid;
+    }
 
     /*****************************************************
      * ------------ * Theme color * --------------------
@@ -261,9 +282,9 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     }
 
     /**
-     * Called when the user changes his location
-     * @param location
-     * @param position
+     * User location changed
+     * @param location new location selected
+     * @param position location position in the list
      */
     @Override
     public void onLocationChange(String location, int position) {
@@ -275,9 +296,10 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * Theme color change event
-     * @param currentItem
-     * @param previousItem
-     * @param position
+     *
+     * @param currentItem current color item
+     * @param previousItem previously selected color item
+     * @param position current item position in the list
      */
     @Override
     public void onColorChange(ColorItem currentItem, ColorItem previousItem, int position) {
