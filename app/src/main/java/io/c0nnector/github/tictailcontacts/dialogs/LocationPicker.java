@@ -54,7 +54,7 @@ public final class LocationPicker {
                     lastSelected = which;
                 })
                 .setPositiveButton("OK", (dialog, which) -> {
-                    if (Val.notNull(locationListener)) locationListener.onLocationChange(timezoneIds[lastSelected], lastSelected);
+                    if (Val.notNull(locationListener)) locationListener.onLocationChange(timezoneIds[lastSelected]);
                 })
                 .setNegativeButton("CANCEL", (dialog, which) -> {
 
@@ -99,6 +99,6 @@ public final class LocationPicker {
      * Called when the user changes his profile location
      */
     public interface LocationChangeListener {
-        void onLocationChange(String location, int position);
+        String onLocationChange(String location);
     }
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import io.c0nnector.github.least.Binder;
 import io.c0nnector.github.least.LeastAdapter;
 import io.c0nnector.github.least.LeastView;
@@ -28,6 +29,7 @@ import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.api.RetroSubscriber;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
+import io.c0nnector.github.tictailcontacts.ui.add_contact.ActivityAddContact;
 import io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact;
 import io.c0nnector.github.tictailcontacts.util.Intents;
 import io.c0nnector.github.tictailcontacts.util.Val;
@@ -58,6 +60,12 @@ public class ViewContacts extends BaseRelativeLayout {
 
     @Bind(R.id.leastView)
     LeastView leastView;
+
+
+    @OnClick(R.id.btnAdd)
+    public void onButtonAdd(){
+        ActivityAddContact.start(activity);
+    }
 
 
     LeastAdapter adapter;

@@ -29,6 +29,7 @@ import rx.Observable;
  */
 public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener {
 
+
     /**
      * Keeps form state
      */
@@ -83,13 +84,18 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     FloatingActionButton btnDone;
 
 
+    Observable<Boolean> observableFirstName;
+    Observable<Boolean> observableLastName;
+    Observable<Boolean> observableLocation;
+
+
     /**
      * Constructor
      *
      * @param context
      * @param listener save changes listener
      */
-    public ViewContactEdit(Context context, SaveChangesListener listener) {
+    public ViewContactEdit(Context context, OnDoneListener listener) {
         super(context);
 
         if (!isInEditMode()) {
@@ -98,7 +104,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
             ButterKnife.bind(this, v);
 
             this.resources = getResources();
-            this.btnDone.setOnClickListener(v1 -> listener.onSaveChangesClick(tmpContact));
+            this.btnDone.setOnClickListener(v1 -> listener.onDoneClick(tmpContact));
 
             setupForm();
         }
@@ -107,9 +113,11 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * Bind contact to view
+     *
      * @param contact
      */
     public void bind(Contact contact) {
+
         this.contact = contact;
         this.tmpContact = contact.clone();
         this.locationPicker = new LocationPicker(getContext(), contact);
@@ -124,9 +132,9 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         txtTeam.setText(contact.getTeam());
         txtLocation.setText(contact.getLocation());
 
-        setHeaderColor(contact.getColorInt());
-
         setupColorPicker(contact);
+
+        setHeaderColor(contact.getColorInt());
     }
 
 
@@ -140,46 +148,54 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * Contact edit form. Handles form validation
-     *
+     * <p>
      * Form is valid when:
      * - Fist name & last name are not empty
+     * - Location is defined
      */
     private void setupForm() {
 
-        observeNameChanges();
+        formValidation(2).subscribe(isValid -> isFormValid = isValid);
 
         observeLocationField();
 
-        observeTextChanges();
+        observeNonValidatedTextChanges();
     }
 
+    /**
+     * Form validation for text input
+     *
+     * @param skipCount number of times to skip before we start validating. Use it to avoid errors showing upon init
+     * @return Observable with form validation result
+     */
+    public Observable<Boolean> formValidation(int skipCount) {
 
-    private void observeNameChanges(){
-
-        //filter name input
-        Observable.combineLatest(RxTextView.textChanges(txtFirst), RxTextView.textChanges(txtLast), (firstName, lastName) -> {
-
-            //check input
-            boolean hasFirstName = validateFormInput(firstName, resources.getString(R.string.error_form_contact_firstname_short), inputLayoutFirst);
-            boolean hasLastName = validateFormInput(lastName, resources.getString(R.string.error_form_contact_lastname_short), inputLayoutLast);
-
-            onNameChange(firstName.toString(), lastName.toString());
-
-            return hasFirstName && hasLastName;
-        })
-                //emmit only when the state changes
-                .distinctUntilChanged()
-
-                .subscribe(valid -> {
-
-                    this.isFormValid = valid;
-                });
+        //first name
+         observableFirstName = RxTextView.textChanges(txtFirst)
+                 .skip(skipCount)
+                .map(charSequence -> onFirstNameChange(charSequence.toString()))
+                .map(firstName -> validateFormInput(firstName, resources.getString(R.string.error_form_firstname), inputLayoutFirst))
+;
+        //last name
+         observableLastName = RxTextView.textChanges(txtLast)
+                 .skip(skipCount)
+                 .map(charSequence -> onLastNameChange(charSequence.toString()))
+                 .map(lastName -> validateFormInput(lastName, resources.getString(R.string.error_form_lastname), inputLayoutLast))
+;
+        //location
+         observableLocation = RxTextView.textChanges(txtLocation)
+                 .skip(skipCount)
+                 .map(location -> validateFormInput(location, resources.getString(R.string.error_form_location), inputLayoutLocation))
+;
+        return Observable.combineLatest(observableFirstName, observableLastName, observableLocation,
+                (hasFirstName, hasLastName, hasLocation) -> hasFirstName && hasLastName && hasLocation);
     }
+
 
     /**
      * Observe click & touch events for the location field
      */
-    private void observeLocationField(){
+    private void observeLocationField() {
 
         //Invoke location picker when the field is focused/clicked
         Observable<Boolean> locationClickObservable = RxView.clickEvents(txtLocation)
@@ -193,9 +209,9 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     }
 
     /**
-     * Other text changes in the form
+     * Text change we don't want to validate
      */
-    private void observeTextChanges(){
+    private void observeNonValidatedTextChanges() {
 
         //team
         RxTextView.textChanges(txtTeam)
@@ -228,10 +244,6 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         return hasText;
     }
 
-    private boolean isFormValid(){
-        return isFormValid;
-    }
-
     /*****************************************************
      * ------------ * Theme color * --------------------
      *
@@ -241,9 +253,10 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * User theme color picker setup
+     *
      * @param contact
      */
-    private void setupColorPicker(Contact contact){
+    private void setupColorPicker(Contact contact) {
 
         colorPicker.selectColor(contact.getColorInt());
         colorPicker.setColorChangeListener(this);
@@ -251,9 +264,10 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
     /**
      * Header background color
+     *
      * @param color
      */
-    private void setHeaderColor(int color){
+    private void setHeaderColor(int color) {
 
         //header color
         vHeader.setBackgroundColor(color);
@@ -269,44 +283,51 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     /**
      * @return true if there are modifications to the user data
      */
-    public boolean hasChangedInfo(){
+    public boolean hasChangedInfo() {
         return !contact.equals(tmpContact);
     }
 
-    public void onNameChange(String firstName, String lastName){
-
-        //save changes to tmp contact
+    public String onFirstNameChange(String firstName){
         tmpContact.setFirst_name(firstName);
-        tmpContact.setLast_name(lastName);
+
+        return firstName;
     }
 
-    public void onTitleChange(String title){
+    public String onLastNameChange(String lastName){
+        tmpContact.setLast_name(lastName);
+
+        return lastName;
+    }
+
+    public void onTitleChange(String title) {
         tmpContact.setTitle(title);
     }
 
-    public void onTeamChange(String team){
+    public void onTeamChange(String team) {
         tmpContact.setTeam(team);
     }
 
     /**
      * User location changed
+     *
      * @param location new location selected
-     * @param position location position in the list
      */
     @Override
-    public void onLocationChange(String location, int position) {
+    public String onLocationChange(String location) {
         this.txtLocation.setText(location);
 
         //save tmp location
         tmpContact.setLocation(location);
+
+        return location;
     }
 
     /**
      * Theme color change event
      *
-     * @param currentItem current color item
+     * @param currentItem  current color item
      * @param previousItem previously selected color item
-     * @param position current item position in the list
+     * @param position     current item position in the list
      */
     @Override
     public void onColorChange(ColorItem currentItem, ColorItem previousItem, int position) {

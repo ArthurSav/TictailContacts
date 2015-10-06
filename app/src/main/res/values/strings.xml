@@ -9,8 +9,10 @@
 
 
     <!--form errors-->
-    <string name="error_form_contact_firstname_short">First name too short</string>
-    <string name="error_form_contact_lastname_short">Last name too short</string>
+    <string name="error_form_firstname">First name too short</string>
+    <string name="error_form_lastname">Last name too short</string>
+    <string name="error_form_location">Location not set!</string>
+    <string name="title_activity_activity_add_contact">Add Contact</string>
 
 
 

@@ -28,5 +28,7 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:background">@color/transparent</item>
     </style>
+    <style name="TailTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="TailTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>

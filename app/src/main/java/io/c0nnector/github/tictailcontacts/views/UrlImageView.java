@@ -86,7 +86,7 @@ public class UrlImageView extends ImageView {
     private String getFilteredUrl(String url) {
 
         //todo - find a solution for the gravatar issue
-        if (url.contains("gravatar")) return "http://klfdnsgfsngkl.com";
+        if (Strings.isNotBlank(url) && url.contains("gravatar")) return "http://klfdnsgfsngkl.com";
 
         return Strings.isBlank(url) ? "http://i.imgur.com/o7q6k5Q.png" : url;
     }

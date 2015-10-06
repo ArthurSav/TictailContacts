@@ -1,5 +1,6 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.transition.ChangeBounds;
@@ -7,7 +8,6 @@ import android.transition.Scene;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 
@@ -21,13 +21,10 @@ import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.util.Message;
+import io.c0nnector.github.tictailcontacts.util.UI;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import retrofit.RetrofitError;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
  * Main contact view. Handles view states
@@ -35,7 +32,9 @@ import rx.functions.Func2;
  * @see ViewContactInfo
  * @see ViewContactEdit
  */
-public class ViewContact extends BaseRelativeLayout implements SaveChangesListener,EditButtonListener{
+public class ViewContact extends BaseRelativeLayout implements OnDoneListener,EditButtonListener {
+
+    Activity activity;
 
     Contact contact;
 
@@ -96,8 +95,9 @@ public class ViewContact extends BaseRelativeLayout implements SaveChangesListen
      * Bind contact to view
      * @param contact
      */
-    public void bind(Contact contact){
+    public void bind(Contact contact, Activity activity){
         this.contact = contact;
+        this.activity = activity;
 
         showDisplayMode();
     }
@@ -115,7 +115,9 @@ public class ViewContact extends BaseRelativeLayout implements SaveChangesListen
     }
 
     @Override
-    public void onSaveChangesClick(Contact tmpContact) {
+    public void onDoneClick(Contact tmpContact) {
+
+        UI.hideKeyboard(activity);
 
         if (viewContactEdit.hasChangedInfo()) {
 

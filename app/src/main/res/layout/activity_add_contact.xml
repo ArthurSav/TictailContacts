@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.c0nnector.github.tictailcontacts.ui.contact.ViewContact
+    android:id="@+id/vContact"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
+
+    <FrameLayout
+        android:id="@+id/frame"
+        tools:layout="@layout/content_activity_contact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+</io.c0nnector.github.tictailcontacts.ui.contact.ViewContact>

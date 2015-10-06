@@ -3,6 +3,8 @@ package io.c0nnector.github.tictailcontacts.util;
 
 import android.graphics.Color;
 
+import io.c0nnector.github.tictailcontacts.views.color_picker.Colors;
+
 /**
  * Color parsing
  */
@@ -15,7 +17,7 @@ public final class UtilColor {
      */
     public static int convert(String color){
 
-        int parsedColor = Color.WHITE;
+        int parsedColor = Colors.BLUE;
 
         if (Strings.isNotBlank(color)) {
             parsedColor = Color.parseColor(color.contains("#")? color: "#"+color);

@@ -45,7 +45,7 @@ public class ActivityContact extends BaseActivity {
 
         if (Val.notNull(contact)) {
 
-            vContact.bind(contact);
+            vContact.bind(contact, this);
         }
     }
 

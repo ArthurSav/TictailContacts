@@ -32,7 +32,7 @@ public class ApiModule {
     @Provides
     @Singleton
     Endpoint provideEndpoint(){
-        return Endpoints.newFixedEndpoint(BASE_URL);
+        return Endpoints.newFixedEndpoint(BASE_URL2);
     }
 
 

@@ -164,6 +164,7 @@ public class ColorPicker extends LeastView {
      */
     public int selectColor(@ColorInt int color){
 
+        //check if color already exists in the list
         for (int i = 0; i < colors.length; i++) {
 
             if (colors[i] == color) {
@@ -174,10 +175,18 @@ public class ColorPicker extends LeastView {
             }
         }
 
-        //default
+        //color is invalid for some reason, return a default
+        if (color == 0) {
+
+            replaceColor(colors[0], 0, true);
+
+            return colors[0];
+        }
+
+        //custom color
         replaceColor(color, 0, true);
 
-        return 0;
+        return color;
     }
 
 
