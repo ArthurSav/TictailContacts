@@ -25,9 +25,10 @@ public class ActivityContacts extends BaseActivity {
         setContentView(R.layout.activity_main);
     }
 
+
     @Override
-    protected void afterViews() {
-        super.afterViews();
+    protected void onResume() {
+        super.onResume();
 
         viewContacts.bind(this);
     }

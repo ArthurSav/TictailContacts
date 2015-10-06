@@ -1,17 +1,20 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.c0nnector.easyoverlay.RelativeOverlay;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
@@ -19,6 +22,7 @@ import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilAnim;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
+import io.c0nnector.github.tictailcontacts.views.ViewLoader;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListener;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
@@ -27,8 +31,8 @@ import rx.Observable;
 /**
  * Contact view, edit user info.
  */
-public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeListener, LocationPicker.LocationChangeListener {
-
+@SuppressLint("ViewConstructor")
+public class ViewContactEdit extends RelativeOverlay implements ColorChangeListener, LocationPicker.LocationChangeListener {
 
     /**
      * Keeps form state
@@ -45,6 +49,13 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     Contact contact;
 
     Resources resources;
+
+    Observable<Boolean> observableFirstName;
+
+    Observable<Boolean> observableLastName;
+
+    Observable<Boolean> observableLocation;
+
 
 
     @Bind(R.id.imgAvatar)
@@ -84,11 +95,6 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     FloatingActionButton btnDone;
 
 
-    Observable<Boolean> observableFirstName;
-    Observable<Boolean> observableLastName;
-    Observable<Boolean> observableLocation;
-
-
     /**
      * Constructor
      *
@@ -122,19 +128,16 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
         this.tmpContact = contact.clone();
         this.locationPicker = new LocationPicker(getContext(), contact);
 
-        //avatar
-        imgAvatar.loadContact(contact);
+        imgAvatar.loadContact(tmpContact);
 
-        txtFirst.setText(contact.getFirst_name());
-        txtLast.setText(contact.getLast_name());
+        txtFirst.setText(tmpContact.getFirst_name());
+        txtLast.setText(tmpContact.getLast_name());
 
-        txtTitle.setText(contact.getTitle());
-        txtTeam.setText(contact.getTeam());
-        txtLocation.setText(contact.getLocation());
+        txtTitle.setText(tmpContact.getTitle());
+        txtTeam.setText(tmpContact.getTeam());
+        txtLocation.setText(tmpContact.getLocation());
 
-        setupColorPicker(contact);
-
-        setHeaderColor(contact.getColorInt());
+        setupColorPicker(tmpContact);
     }
 
 
@@ -203,9 +206,7 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
         Observable.merge(locationClickObservable, RxView.focusChanges(txtLocation))
                 .filter(aBoolean -> aBoolean)
-                .subscribe(aBoolean -> {
-                    locationPicker.show(this);
-                });
+                .subscribe(aBoolean -> locationPicker.show(this));
     }
 
     /**
@@ -214,16 +215,10 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
     private void observeNonValidatedTextChanges() {
 
         //team
-        RxTextView.textChanges(txtTeam)
-                .subscribe(team -> {
-                    onTeamChange(team.toString());
-                });
+        RxTextView.textChanges(txtTeam).subscribe(team -> onTeamChange(team.toString()));
 
         //title
-        RxTextView.textChanges(txtTitle)
-                .subscribe(title -> {
-                    onTitleChange(title.toString());
-                });
+        RxTextView.textChanges(txtTitle).subscribe(title -> onTitleChange(title.toString()));
     }
 
     /**
@@ -258,8 +253,10 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
      */
     private void setupColorPicker(Contact contact) {
 
-        colorPicker.selectColor(contact.getColorInt());
+        int selectColor = colorPicker.selectColor(contact.getColorInt());
         colorPicker.setColorChangeListener(this);
+
+        setHeaderColor(selectColor);
     }
 
     /**
@@ -335,5 +332,36 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
 
         //save tmp color
         tmpContact.setColor(currentItem.getColor());
+    }
+
+
+    /*****************************************************
+     * ---------------- * Getters * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    public Contact getTmpContact(){
+        return tmpContact;
+    }
+
+    /*****************************************************
+     * ---------------- * Other * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    /**
+     * Show progress loader
+     * @param message message to display, if any
+     */
+    public void showLoader(String message){
+        addOverlay(new ViewLoader(getContext()).setMessage(message));
+    }
+
+    public void hideLoader(){
+        removeOverlays();
     }
 }

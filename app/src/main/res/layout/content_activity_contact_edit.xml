@@ -66,7 +66,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="First name"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:inputType="text"/>
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -86,7 +87,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Last name"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:inputType="text"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -117,7 +119,8 @@
                     android:fontFamily="sans-serif-light"
                     android:hint="Title"
                     android:minWidth="150dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -137,7 +140,8 @@
                     android:fontFamily="sans-serif-light"
                     android:hint="Team"
                     android:minWidth="150dp"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:inputType="text"/>
 
             </android.support.design.widget.TextInputLayout>
 

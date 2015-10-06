@@ -26,8 +26,9 @@
         </activity>
         <activity
             android:name=".ui.add_contact.ActivityAddContact"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_activity_add_contact"
-            android:theme="@style/TailTheme" >
+            >
         </activity>
     </application>
 

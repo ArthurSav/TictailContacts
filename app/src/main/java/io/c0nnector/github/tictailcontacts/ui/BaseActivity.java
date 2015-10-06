@@ -1,5 +1,6 @@
 package io.c0nnector.github.tictailcontacts.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     public View getContentView(){
         return this.findViewById(android.R.id.content);
     }
+
+    /**
+     * Convenience method to get context
+     * @return
+     */
+    public Context getContext(){ return this;}
 
 
     @Nullable

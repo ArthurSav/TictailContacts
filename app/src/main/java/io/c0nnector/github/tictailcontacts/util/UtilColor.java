@@ -17,6 +17,7 @@ public final class UtilColor {
      */
     public static int convert(String color){
 
+        //default color
         int parsedColor = Colors.BLUE;
 
         if (Strings.isNotBlank(color)) {

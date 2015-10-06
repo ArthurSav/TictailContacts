@@ -32,10 +32,12 @@ import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.ui.add_contact.ActivityAddContact;
 import io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact;
 import io.c0nnector.github.tictailcontacts.util.Intents;
+import io.c0nnector.github.tictailcontacts.util.UtilRx;
 import io.c0nnector.github.tictailcontacts.util.Val;
 import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecoration;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import retrofit.RetrofitError;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -82,8 +84,9 @@ public class ViewContacts extends BaseRelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        subscriptions.unsubscribe();
+        UtilRx.unsubscribeIfNotNull(subscriptions);
     }
+
 
     /**
      * Binds the view
@@ -142,19 +145,19 @@ public class ViewContacts extends BaseRelativeLayout {
     private void requestContacts(){
 
         subscriptions.add(
+
                 apiService.getContacts()
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnNext(this::setupContacts)
-                        .subscribe(contactsSubscriber)
+                        .subscribe(new RetroSubscriber<List<Contact>>() {
+                            @Override
+                            public void onRetrofitError(RetrofitError error) {
+                                super.onRetrofitError(error);
+                            }
+                        })
         );
-    }
 
-    private RetroSubscriber contactsSubscriber = new RetroSubscriber<List<Contact>>() {
-        @Override
-        public void onRetrofitError(RetrofitError error) {
-            super.onRetrofitError(error);
-        }
-    };
+    }
 
     /*****************************************************
      * ---------------- * Update contact * --------------------

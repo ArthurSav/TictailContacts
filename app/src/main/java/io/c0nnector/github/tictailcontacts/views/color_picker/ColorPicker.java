@@ -171,7 +171,7 @@ public class ColorPicker extends LeastView {
 
                 replaceColor(color, i, true);
 
-                return i;
+                return color;
             }
         }
 
