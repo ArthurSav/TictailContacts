@@ -16,6 +16,13 @@ import java.util.ArrayList;
  */
 public class Intents {
 
+    public static final int REQUEST_CODE_DEFAULT = 345;
+    public static final int RESULT_CODE_DEFAULT = 346;
+
+
+    public static final int RESULT_CONTACT = 223;
+
+
     @NonNull
     Context context;
 
@@ -26,6 +33,7 @@ public class Intents {
 
     /**
      * Intent with activity
+     *
      * @param activity
      * @param gotoClass
      */
@@ -36,6 +44,7 @@ public class Intents {
 
     /**
      * Intent with context
+     *
      * @param context
      * @param gotoClass
      */
@@ -52,20 +61,21 @@ public class Intents {
      *
      * @param activity
      * @param gotoClass
+     *
      * @return
      */
-    public static Intents with(Activity activity, Class gotoClass){
+    public static Intents with(Activity activity, Class gotoClass) {
         return new Intents(activity, gotoClass);
     }
 
-    public static Intents with(Context context, Class gotoClass){
+    public static Intents with(Context context, Class gotoClass) {
         return new Intents(context, gotoClass);
     }
 
     /**
      * Open activity
      */
-    public void open(){
+    public void open() {
 
         intent.putExtras(bundle);
 
@@ -77,12 +87,46 @@ public class Intents {
      *
      * @param options bundle with extras
      */
-    public void open(Bundle options){
+    public void open(Bundle options) {
 
         intent.putExtras(bundle);
 
         getContext().startActivity(intent, options);
     }
+
+    /*****************************************************
+     * ---------------- * Result * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    /**
+     * Start activity for result
+     *
+     * @param activity
+     * @param options
+     */
+    public void openWithResult(Activity activity, Bundle options) {
+
+        intent.putExtras(bundle);
+
+        activity.startActivityForResult(intent, REQUEST_CODE_DEFAULT, options);
+    }
+
+    /**
+     * Set result for startActivityForResult
+     *
+     * @param activity
+     * @param bundle data to pass
+     */
+    public static void setResult(Activity activity, int resultCode, Bundle bundle) {
+        Intent intent = activity.getIntent();
+        intent.putExtras(bundle);
+
+        activity.setResult(resultCode, intent);
+    }
+
 
     /*****************************************************
      * ---------------- * Flags * --------------------
@@ -94,7 +138,7 @@ public class Intents {
     /**
      * Cleans any previously open activities before opening the new activity
      */
-    public Intents cleanBackStack(){
+    public Intents cleanBackStack() {
 
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -104,37 +148,34 @@ public class Intents {
 
     /*****************************************************
      * ---------------- * Setters * --------------------
-     *
-     *
-     *
      ****************************************************/
 
-    public Intents extra(String key, String data){
+    public Intents extra(String key, String data) {
         bundle.putString(key, data);
         return this;
     }
 
-    public Intents extra(String key, Integer data){
+    public Intents extra(String key, Integer data) {
         bundle.putInt(key, data);
         return this;
     }
 
-    public Intents extra(String key, Boolean data){
+    public Intents extra(String key, Boolean data) {
         bundle.putBoolean(key, data);
         return this;
     }
 
-    public Intents extra(String key, Parcelable data){
+    public Intents extra(String key, Parcelable data) {
         bundle.putParcelable(key, data);
         return this;
     }
 
-    public Intents extra(String key, Parcelable[] data){
+    public Intents extra(String key, Parcelable[] data) {
         bundle.putParcelableArray(key, data);
         return this;
     }
 
-    public Intents extra(String key, ArrayList<? extends Parcelable> list){
+    public Intents extra(String key, ArrayList<? extends Parcelable> list) {
         bundle.putParcelableArrayList(key, list);
         return this;
     }
@@ -142,10 +183,12 @@ public class Intents {
 
     /**
      * Replaces the default bundle
+     *
      * @param bundle
+     *
      * @return
      */
-    public Intents bundle(Bundle bundle){
+    public Intents bundle(Bundle bundle) {
         this.bundle = bundle;
 
         return this;
@@ -160,9 +203,10 @@ public class Intents {
 
     /**
      * Wraps @parcel objects
+     *
      * @return
      */
-    public Intents extraParcel(String key, Object object){
+    public Intents extraParcel(String key, Object object) {
         extra(key, Parcels.wrap(object));
 
         return this;
@@ -170,9 +214,6 @@ public class Intents {
 
     /*****************************************************
      * ---------------- * Getters * --------------------
-     *
-     *
-     *
      ****************************************************/
 
     private Context getContext() {

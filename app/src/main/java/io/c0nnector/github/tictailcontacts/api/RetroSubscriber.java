@@ -27,6 +27,11 @@ public abstract class RetroSubscriber<T> extends Subscriber<T> {
      */
     public  void onRetrofitError(RetrofitError error){}
 
+    /**
+     * Retrofit error - Kind network
+     * @param error
+     */
+    public void onNetworkError(RetrofitError error){}
 
     @Override
     public void onNext(T t) {

@@ -134,7 +134,6 @@ public class Contact {
 
     Map<String, String> params = new HashMap<>();
 
-    params.put("id", id);
     params.put("first_name", first_name);
     params.put("last_name", last_name);
     params.put("image", image);
@@ -147,7 +146,11 @@ public class Contact {
   }
 
 
-    public Contact clone(){
+  public boolean equals(Contact contact) {
+    return getAsMap().hashCode() == contact.getAsMap().hashCode();
+  }
+
+  public Contact clone(){
 
         Contact contact = new Contact();
         contact.color = this.color;

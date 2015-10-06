@@ -62,7 +62,7 @@ public interface ApiService {
     Observable<Contact> addContact(@FieldMap Map<String, String> fields);
 
     @FormUrlEncoded
-    @PUT("/contact/{id}")
+    @PUT("/contacts/{id}")
     Observable<Contact> updateContact(
 
             @Path("id")

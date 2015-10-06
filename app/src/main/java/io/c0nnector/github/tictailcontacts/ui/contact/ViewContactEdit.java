@@ -266,6 +266,13 @@ public class ViewContactEdit extends BaseRelativeLayout implements ColorChangeLi
      *
      ****************************************************/
 
+    /**
+     * @return true if there are modifications to the user data
+     */
+    public boolean hasChangedInfo(){
+        return !contact.equals(tmpContact);
+    }
+
     public void onNameChange(String firstName, String lastName){
 
         //save changes to tmp contact
