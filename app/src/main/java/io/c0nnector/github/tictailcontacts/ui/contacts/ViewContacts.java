@@ -64,6 +64,8 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
     Activity activity;
     List<Contact> contacts;
 
+    LeastAdapter adapter;
+
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
 
@@ -83,7 +85,6 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
     }
 
 
-    LeastAdapter adapter;
 
     public ViewContacts(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -119,12 +120,14 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
     private void setupContacts(List<Contact> contacts){
         this.contacts = contacts;
 
-        if (adapter == null) {
+        if (Val.isNull(adapter)) {
 
             //contact binder
             Binder contactBinder = ContactBinder
                     .instance()
-                    .setListItemClickListener(listItemListenerContact);
+
+                    //item click listener, opens contact view
+                    .setListItemClickListener((holder, contact, position) -> ActivityContact.start(activity, contact, position, holder.imgAvatar));
 
             adapter = new LeastAdapter.Builder()
                     .binder(contactBinder)
@@ -142,13 +145,6 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
 
         else adapter.replace(contacts);
     }
-
-    /**
-     * Contacts list item listener
-     */
-    private ListItemListener<ContactViewHolder, Contact> listItemListenerContact = (contactViewHolder, contact, i) -> {
-        ActivityContact.start(activity, contact, i, contactViewHolder.imgAvatar);
-    };
 
     /*****************************************************
      * ---------------- * Requests * --------------------
@@ -169,6 +165,7 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
                             @Override
                             public void onRetrofitError(RetrofitError error) {
                                 super.onRetrofitError(error);
+                                //todo - show error
                             }
                         })
         );
@@ -183,7 +180,7 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
      ****************************************************/
 
     /**
-     * Update contact from intent result
+     * Handles onActivity result
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data){
 
