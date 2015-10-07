@@ -60,7 +60,7 @@ public class ViewContactInfo extends RelativeLayout {
         super(context);
 
         if (!isInEditMode()) {
-            View v = inflate(getContext(), R.layout.content_activity_contact, this);
+            View v = inflate(getContext(), R.layout.content_contact_info, this);
             ButterKnife.bind(this, v);
 
             this.btnOnEdit.setOnClickListener(v1 -> listener.onEditClick());
@@ -81,7 +81,7 @@ public class ViewContactInfo extends RelativeLayout {
         imgAvatar.loadContact(contact);
 
         //header color
-        vHeader.setBackgroundColor(contact.getColorInt());
+        setBackgroundColor(contact.getColorInt());
 
         //title
         validateInfo(contact.getTitle(), vTitle, txtTitle);

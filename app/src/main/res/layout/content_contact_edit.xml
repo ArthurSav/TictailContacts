@@ -9,6 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/vWrapper"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
@@ -17,10 +18,11 @@
         <RelativeLayout
             android:id="@+id/vHeader"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="160dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            tools:background="@color/amber_300">
+            tools:background="@color/amber_300"
+            >
 
             <io.c0nnector.github.tictailcontacts.views.UrlImageView
                 android:id="@+id/imgAvatar"
@@ -42,7 +44,8 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/vHeader"
             android:layout_centerHorizontal="true"
-            android:layout_margin="15dp">
+            android:background="@color/white"
+            android:padding="10dp">
 
             <RelativeLayout
                 android:id="@+id/vName"
@@ -178,7 +181,7 @@
                     android:id="@+id/vColorPicker"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="25dp"/>
             </RelativeLayout>
 
 

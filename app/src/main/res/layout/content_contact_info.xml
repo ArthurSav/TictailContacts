@@ -9,6 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/vWrapper"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
@@ -20,7 +21,8 @@
             android:layout_above="@+id/relativeLayout"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            tools:background="@color/amber_300">
+            tools:background="@color/amber_300"
+            android:paddingTop="@dimen/toolbar_margin_top">
 
             <io.c0nnector.github.tictailcontacts.views.UrlImageView
                 android:id="@+id/imgAvatar"
@@ -35,13 +37,15 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/vInfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/relativeLayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp">
+            android:orientation="vertical"
+            android:gravity="top|center"
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/txtName"
@@ -54,7 +58,39 @@
                 tools:text="User name"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:layout_marginTop="20dp"/>
+
+            <RelativeLayout
+                android:id="@+id/vLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_below="@+id/vTeam"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    tools:text="Location"
+                    android:id="@+id/txtLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/vDot31"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="15sp"
+                    android:visibility="visible"/>
+
+                <RelativeLayout
+                    android:id="@+id/vDot31"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/shape_dot_grey"/>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/vTitle"
@@ -82,7 +118,7 @@
                     android:layout_width="5dp"
                     android:layout_height="5dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:background="@drawable/shape_dot_grey"/>
 
             </RelativeLayout>
@@ -114,41 +150,11 @@
                     android:layout_width="5dp"
                     android:layout_height="5dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:background="@drawable/shape_dot_grey"/>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/vLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_below="@+id/vTeam"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    tools:text="Location"
-                    android:id="@+id/txtLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vDot31"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="15sp"
-                    android:visibility="visible"/>
-
-                <RelativeLayout
-                    android:id="@+id/vDot31"
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/shape_dot_grey"/>
-            </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout"

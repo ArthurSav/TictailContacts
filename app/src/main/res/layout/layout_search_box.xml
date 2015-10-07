@@ -18,8 +18,7 @@
         android:background="@drawable/shape_search_view_background"
         android:elevation="5dp"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"

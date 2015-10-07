@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -20,7 +19,6 @@ import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilAnim;
-import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 import io.c0nnector.github.tictailcontacts.views.ViewLoader;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListener;
@@ -106,7 +104,7 @@ public class ViewContactEdit extends RelativeOverlay implements ColorChangeListe
 
         if (!isInEditMode()) {
 
-            View v = inflate(getContext(), R.layout.content_activity_contact_edit, this);
+            View v = inflate(getContext(), R.layout.content_contact_edit, this);
             ButterKnife.bind(this, v);
 
             this.resources = getResources();
@@ -267,7 +265,7 @@ public class ViewContactEdit extends RelativeOverlay implements ColorChangeListe
     private void setHeaderColor(int color) {
 
         //header color
-        vHeader.setBackgroundColor(color);
+        setBackgroundColor(color);
     }
 
     /*****************************************************
@@ -328,7 +326,7 @@ public class ViewContactEdit extends RelativeOverlay implements ColorChangeListe
      */
     @Override
     public void onColorChange(ColorItem currentItem, ColorItem previousItem, int position) {
-        UtilAnim.animateBackgroundColorChange(vHeader, previousItem.getColor(), currentItem.getColor());
+        UtilAnim.animateBackgroundColorChange(this, previousItem.getColor(), currentItem.getColor());
 
         //save tmp color
         tmpContact.setColor(currentItem.getColor());

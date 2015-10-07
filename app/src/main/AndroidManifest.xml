@@ -21,10 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.contact.ActivityContact">
+            android:name=".ui.contact.ActivityContact"
+            android:theme="@style/TranslucentStatusbar"
+            >
         </activity>
         <activity
             android:name=".ui.add_contact.ActivityAddContact"
+            android:theme="@style/TranslucentStatusbar"
             android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_activity_add_contact"
             >

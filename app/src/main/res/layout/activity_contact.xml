@@ -6,21 +6,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
 
     <FrameLayout
         android:id="@+id/frame"
-        tools:layout="@layout/content_activity_contact"
+        tools:layout="@layout/content_contact_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </FrameLayout>
+        android:layout_alignParentStart="true"/>
 
     <io.c0nnector.github.tictailcontacts.views.ToolbarBack
         android:id="@+id/toolbar"
+        android:layout_marginTop="@dimen/toolbar_margin_top"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

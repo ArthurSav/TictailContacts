@@ -47,7 +47,6 @@ public class ActivityContact extends BaseActivity {
         super.validate();
 
         if (Val.notNull(contact)) {
-
             vContact.bind(contact, this);
         }
     }
