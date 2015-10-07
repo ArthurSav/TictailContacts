@@ -92,10 +92,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (Val.notNull(toolbar)) {
 
-            //setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
 
             setNavigationClickListener();
         }
+    }
+
+    protected void disableToolbarTitle(){
+        if (Val.notNull(getToolbar())) getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     /**
@@ -110,9 +114,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public Toolbar getToolbar(){
-
-        if (toolbar == null) throw new RuntimeException("Toolbar is null");
-
         return toolbar;
     }
 }

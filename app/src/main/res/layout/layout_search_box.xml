@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.c0nnector.github.tictailcontacts.views.ViewSearch
+    android:id="@+id/vSearch"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:background="@color/grey_700">
+
+    <LinearLayout
+        android:id="@+id/vSearchWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_search_view_background"
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:visibility="visible"
+            tools:layout_width="match_parent">
+
+            <EditText
+                android:id="@+id/txtSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btnClose"
+                android:layout_toStartOf="@+id/btnClose"
+                android:background="#fff"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center_vertical"
+                android:hint="Search contacts"
+                android:padding="10dp"
+                android:textColor="@color/grey_800"
+                android:textColorHint="@color/grey_500"/>
+
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_close_grey_500_24dp"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</io.c0nnector.github.tictailcontacts.views.ViewSearch>

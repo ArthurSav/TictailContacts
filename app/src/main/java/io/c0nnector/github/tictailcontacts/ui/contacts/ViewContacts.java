@@ -14,7 +14,11 @@ import com.f2prateek.dart.Dart;
 import org.parceler.Parcel;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -36,15 +40,20 @@ import io.c0nnector.github.tictailcontacts.util.UtilRx;
 import io.c0nnector.github.tictailcontacts.util.Val;
 import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecoration;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
+import io.c0nnector.github.tictailcontacts.views.ViewSearch;
 import retrofit.RetrofitError;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * View handler for the main activity
  */
-public class ViewContacts extends BaseRelativeLayout {
+public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewSearchListener{
 
     /**
      * Activity for result code, contact
@@ -53,6 +62,7 @@ public class ViewContacts extends BaseRelativeLayout {
 
 
     Activity activity;
+    List<Contact> contacts;
 
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
@@ -62,6 +72,9 @@ public class ViewContacts extends BaseRelativeLayout {
 
     @Bind(R.id.leastView)
     LeastView leastView;
+
+    @Bind(R.id.vSearch)
+    ViewSearch viewSearch;
 
 
     @OnClick(R.id.btnAdd)
@@ -94,6 +107,8 @@ public class ViewContacts extends BaseRelativeLayout {
     public void bind(AppCompatActivity activity){
         this.activity = activity;
 
+        viewSearch.bind(this, this);
+
         requestContacts();
     }
 
@@ -102,6 +117,7 @@ public class ViewContacts extends BaseRelativeLayout {
      * @param contacts
      */
     private void setupContacts(List<Contact> contacts){
+        this.contacts = contacts;
 
         if (adapter == null) {
 
@@ -195,5 +211,26 @@ public class ViewContacts extends BaseRelativeLayout {
         if (Val.notNull(adapter)) {
             adapter.replace(contact, position);
         }
+    }
+
+
+    /*****************************************************
+     * ---------------- * Search * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    @Override
+    public void onTextSearch(String query) {
+
+        //don't search when empty
+        if (Val.isNull(contacts)) return;
+
+        Observable.from(contacts)
+                .filter(contact -> contact.getName().contains(query))
+                .toList()
+                .doOnError(Throwable::printStackTrace)
+                .subscribe(adapter::replace);
     }
 }
