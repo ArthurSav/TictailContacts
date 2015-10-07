@@ -1,9 +1,9 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
-
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
@@ -24,9 +24,10 @@ import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.util.Message;
 import io.c0nnector.github.tictailcontacts.util.UI;
-import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
+import io.c0nnector.github.tictailcontacts.views.BaseRelativeOverlay;
 import retrofit.RetrofitError;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Main contact view. Handles view states
@@ -34,9 +35,9 @@ import rx.android.schedulers.AndroidSchedulers;
  * @see ViewContactInfo
  * @see ViewContactEdit
  */
-public class ViewContact extends BaseRelativeLayout implements OnDoneListener,EditButtonListener {
+public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,EditButtonListener {
 
-    Activity activity;
+    AppCompatActivity activity;
 
     Contact contact;
 
@@ -97,7 +98,7 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
      * Bind contact to view
      * @param contact
      */
-    public void bind(Contact contact, Activity activity){
+    public void bind(Contact contact, AppCompatActivity activity){
         this.contact = contact;
         this.activity = activity;
 
@@ -130,6 +131,20 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
         }
 
         showDisplayMode();
+    }
+
+    /**
+     * Called when the user selects to delete the contact from options
+     * @param contact
+     */
+    public void onContactDelete(Contact contact){
+
+        //confirm
+        new AlertDialog.Builder(getContext())
+                .setMessage("Are you sure you want to delete this contact?")
+                .setPositiveButton("YES", (dialog, which) -> deleteContact(contact))
+                .setNegativeButton("CANCEL", (dialog, which) -> {})
+                .show();
     }
 
     /*****************************************************
@@ -171,7 +186,48 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
      *
      ****************************************************/
 
-    protected void updateContact(Contact contact){
+    /**
+     * Delete contact call
+     * @param contact
+     */
+    private void deleteContact(Contact contact){
+
+        apiService.deleteContact(contact.getId())
+                .observeOn(AndroidSchedulers.mainThread())
+
+                .doOnRequest(aLong -> showLoader("Deleting contact..."))
+
+                .doOnNext(contact1 -> {
+
+                    hideLoader();
+
+                    Message.show(getContext(), "Contact Deleted");
+                    activity.supportFinishAfterTransition();
+                })
+                .doOnError(throwable -> hideLoader())
+
+                .subscribe(new RetroSubscriber<Contact>() {
+                    @Override
+                    public void onRetrofitError(RetrofitError error) {
+                        super.onRetrofitError(error);
+
+                        String message;
+
+                        if (error.getKind() == RetrofitError.Kind.NETWORK)
+                            message = "Network error";
+                        else message = "Something went wrong";
+
+                        Message.show(getContext(), message);
+                    }
+                });
+
+    }
+
+    /**
+     * Update contact call
+     * @param contact
+     */
+    private void updateContact(Contact contact){
 
         apiService.updateContact(contact.getId(), contact.getAsMap())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -93,8 +93,17 @@ public class ActivityContact extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_delete) {
+            vContact.onContactDelete(contact);
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
     /*****************************************************

@@ -3,9 +3,14 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".MainActivity">
 
-    <item android:id="@+id/action_search"
-          android:title="@string/action_search"
-          android:orderInCategory="100"
-          android:icon="@drawable/ic_more_vert_white_24dp"
-          app:showAsAction="always"/>
+      <item
+          android:id="@+id/action_delete"
+          app:showAsAction="never"
+          android:title="Delete"
+          android:visible="true"/>
+      <item
+          android:id="@+id/action_cancel"
+          app:showAsAction="never"
+          android:title="Cancel"
+          android:visible="true"/>
 </menu>

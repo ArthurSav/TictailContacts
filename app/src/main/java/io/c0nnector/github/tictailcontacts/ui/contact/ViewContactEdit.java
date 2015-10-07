@@ -19,6 +19,7 @@ import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilAnim;
+import io.c0nnector.github.tictailcontacts.views.BaseRelativeOverlay;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 import io.c0nnector.github.tictailcontacts.views.ViewLoader;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListener;
@@ -30,7 +31,7 @@ import rx.Observable;
  * Contact view, edit user info.
  */
 @SuppressLint("ViewConstructor")
-public class ViewContactEdit extends RelativeOverlay implements ColorChangeListener, LocationPicker.LocationChangeListener {
+public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeListener, LocationPicker.LocationChangeListener {
 
     /**
      * Keeps form state
@@ -350,19 +351,6 @@ public class ViewContactEdit extends RelativeOverlay implements ColorChangeListe
      *
      *
      ****************************************************/
-
-    /**
-     * Show progress loader
-     * @param message message to display, if any
-     */
-    public void showLoader(String message){
-        addOverlay(new ViewLoader(getContext()).setMessage(message));
-    }
-
-    public void hideLoader(){
-        removeOverlays();
-    }
-
 
     /**
      * Converts the fab into a 'plus' button

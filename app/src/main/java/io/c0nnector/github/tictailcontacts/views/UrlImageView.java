@@ -10,14 +10,11 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.util.Measure;
 import io.c0nnector.github.tictailcontacts.util.Strings;
-import io.c0nnector.github.tictailcontacts.util.UtilColor;
-import io.c0nnector.github.tictailcontacts.util.picasso.CircleBorderTransformation;
 import io.c0nnector.github.tictailcontacts.util.picasso.CircleTransform;
 
 
