@@ -18,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
-    <android.support.v7.widget.Toolbar
+    <io.c0nnector.github.tictailcontacts.views.ToolbarBack
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"

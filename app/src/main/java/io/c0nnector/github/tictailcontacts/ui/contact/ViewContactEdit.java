@@ -364,4 +364,13 @@ public class ViewContactEdit extends RelativeOverlay implements ColorChangeListe
     public void hideLoader(){
         removeOverlays();
     }
+
+
+    /**
+     * Converts the fab into a 'plus' button
+     */
+    public void showPlusButton(){
+        btnDone.setImageResource(R.drawable.ic_add_white_24dp);
+        btnDone.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
+    }
 }

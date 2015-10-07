@@ -60,8 +60,7 @@ dependencies {
 
     //my libs
     compile 'com.github.c0nnector:Least:1.0.9.1'
-    compile 'com.github.c0nnector:EasyOverlay:1d0a21f1f1'
-
+    compile 'com.github.c0nnector:EasyOverlay:c31eff76d3'
     //extras injection
     compile 'com.f2prateek.dart:dart:2.0.0-RC1'
     provided 'com.f2prateek.dart:dart-processor:2.0.0-RC1'

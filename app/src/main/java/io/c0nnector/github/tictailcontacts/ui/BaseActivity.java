@@ -13,6 +13,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.util.Val;
+import io.c0nnector.github.tictailcontacts.views.ToolbarBack;
+import io.c0nnector.github.tictailcontacts.views.ToolbarCancel;
 
 /**
  * Base class to be extended by all other activities
@@ -90,7 +92,27 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (Val.notNull(toolbar)) {
 
-            setSupportActionBar(toolbar);
+            //setSupportActionBar(toolbar);
+
+            setNavigationClickListener();
         }
+    }
+
+    /**
+     * Navigation back behaviour
+     */
+    protected void setNavigationClickListener(){
+
+        if (toolbar instanceof ToolbarBack || toolbar instanceof ToolbarCancel) {
+
+            getToolbar().setNavigationOnClickListener(v -> supportFinishAfterTransition());
+        }
+    }
+
+    public Toolbar getToolbar(){
+
+        if (toolbar == null) throw new RuntimeException("Toolbar is null");
+
+        return toolbar;
     }
 }

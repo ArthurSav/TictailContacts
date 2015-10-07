@@ -3,13 +3,15 @@ package io.c0nnector.github.tictailcontacts.ui.contact;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
-import android.transition.ChangeBounds;
-import android.transition.Scene;
-import android.transition.Transition;
-import android.transition.TransitionManager;
+
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
+
+import com.transitionseverywhere.ChangeBounds;
+import com.transitionseverywhere.Scene;
+import com.transitionseverywhere.Transition;
+import com.transitionseverywhere.TransitionManager;
 
 import javax.inject.Inject;
 
@@ -137,8 +139,6 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
      *
      ****************************************************/
 
-
-    //todo - support previous apis
     private void showEditMode(){
 
         viewContactEdit.bind(contact);
@@ -175,7 +175,8 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
 
         apiService.updateContact(contact.getId(), contact.getAsMap())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(contact1 -> Snackbar.make(this,"Profile Updated", Snackbar.LENGTH_SHORT).show())
+
+                .doOnNext(contact1 -> Snackbar.make(this, "Profile Updated", Snackbar.LENGTH_SHORT).show())
                 .doOnError(throwable -> showRetryMessage(contact))
 
                 .subscribe(new RetroSubscriber<Contact>() {
@@ -189,13 +190,12 @@ public class ViewContact extends BaseRelativeLayout implements OnDoneListener,Ed
     }
 
     /**
-     * Snackbar message to retry updating the user after a failure
+     * Snackbar message to retry profile update
      * @param contact
      */
     private void showRetryMessage(Contact contact){
         Snackbar.make(ViewContact.this, "Could not update user", Snackbar.LENGTH_LONG)
-                .setAction("RETRY", v -> {
-                    updateContact(contact);
-                }).show();
+                .setAction("RETRY", v -> updateContact(contact))
+                .show();
     }
 }

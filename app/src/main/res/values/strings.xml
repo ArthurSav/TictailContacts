@@ -12,8 +12,8 @@
     <string name="error_form_firstname">First name too short</string>
     <string name="error_form_lastname">Last name too short</string>
     <string name="error_form_location">Location not set!</string>
-    <string name="title_activity_activity_add_contact">Add Contact</string>
-
+    <string name="title_activity_activity_add_contact">New Contact</string>
+    <string name="title_contacts">Contacts</string>
 
 
 </resources>

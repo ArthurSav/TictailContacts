@@ -6,6 +6,7 @@
     <style name="TailTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
         <!-- Customize your theme here. -->

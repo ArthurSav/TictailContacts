@@ -21,8 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.contact.ActivityContact"
-            android:label="@string/title_activity_activity_contact" >
+            android:name=".ui.contact.ActivityContact">
         </activity>
         <activity
             android:name=".ui.add_contact.ActivityAddContact"

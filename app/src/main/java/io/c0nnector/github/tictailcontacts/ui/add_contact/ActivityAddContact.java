@@ -52,6 +52,7 @@ public class ActivityAddContact extends BaseActivity implements OnDoneListener {
         super.initVariables();
 
         viewContactEdit = new ViewContactEdit(this, this);
+        viewContactEdit.showPlusButton();
     }
 
     @Override
