@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
+import android.widget.ProgressBar;
 
 import com.f2prateek.dart.Dart;
 
@@ -36,8 +37,10 @@ import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.ui.add_contact.ActivityAddContact;
 import io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact;
 import io.c0nnector.github.tictailcontacts.util.Intents;
+import io.c0nnector.github.tictailcontacts.util.Message;
 import io.c0nnector.github.tictailcontacts.util.UI;
 import io.c0nnector.github.tictailcontacts.util.UtilRx;
+import io.c0nnector.github.tictailcontacts.util.UtilView;
 import io.c0nnector.github.tictailcontacts.util.Val;
 import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecoration;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeLayout;
@@ -78,6 +81,9 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
 
     @Bind(R.id.vSearch)
     ViewSearch viewSearch;
+
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
 
     @OnClick(R.id.btnAdd)
@@ -161,12 +167,24 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
 
                 apiService.getContacts()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnNext(this::setupContacts)
+
+                        .doOnRequest(aLong -> showProgress(true))
+                        .doOnError(throwable -> showProgress(false))
+                        .doOnNext(contacts1 -> showProgress(false))
+
                         .subscribe(new RetroSubscriber<List<Contact>>() {
                             @Override
                             public void onRetrofitError(RetrofitError error) {
                                 super.onRetrofitError(error);
-                                //todo - show error
+
+                                Message.show(getContext(), "Oops! Could not load contacts :(");
+                            }
+
+                            @Override
+                            public void onNext(List<Contact> contacts) {
+                                super.onNext(contacts);
+
+                                setupContacts(contacts);
                             }
                         })
         );
@@ -235,5 +253,16 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
     @Override
     public void onSearchClose() {
         UI.hideKeyboard(activity);
+    }
+
+    /*****************************************************
+     * ---------------- * Other * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    private void showProgress(boolean show){
+        UtilView.show(progressBar, show);
     }
 }

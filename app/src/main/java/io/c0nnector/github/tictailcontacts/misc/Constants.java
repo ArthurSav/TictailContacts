@@ -3,7 +3,6 @@ package io.c0nnector.github.tictailcontacts.misc;
 
 public class Constants {
 
-
     /**
      * OkHttp client timeout
      */
@@ -24,5 +23,20 @@ public class Constants {
      ****************************************************/
 
     public static final String ERROR_NETWORK = "Network error";
+
+
+    /*****************************************************
+     * ---------------- * Server * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    private static final String BASE_URL = "http://192.168.1.4:5000";
+    private static final String BASE_URL2 = "http://192.168.10.74:5000";
+
+    public static String getServerUrl(){
+        return BASE_URL;
+    }
 
 }

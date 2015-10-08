@@ -3,6 +3,9 @@ package io.c0nnector.github.tictailcontacts.modules;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
+
+import java.util.Collections;
 
 import javax.inject.Singleton;
 
@@ -26,13 +29,11 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 )
 public class ApiModule {
 
-    private static final String BASE_URL = "http://192.168.1.4:5000";
-    private static final String BASE_URL2 = "http://192.168.10.74:5000";
 
     @Provides
     @Singleton
     Endpoint provideEndpoint(){
-        return Endpoints.newFixedEndpoint(BASE_URL);
+        return Endpoints.newFixedEndpoint(Constants.getServerUrl());
     }
 
 
@@ -74,6 +75,9 @@ public class ApiModule {
     static OkHttpClient createOkHttpClient() {
 
         OkHttpClient client = new OkHttpClient();
+
+        //todo - see https://github.com/square/okhttp/issues/1844#issuecomment-146457523
+        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
         client.setConnectTimeout(Constants.HTTP_CLIENT_TIMEOUT, SECONDS);
         client.setReadTimeout(Constants.HTTP_CLIENT_TIMEOUT, SECONDS);
