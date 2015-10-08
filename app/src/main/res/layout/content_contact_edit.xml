@@ -24,7 +24,7 @@
             tools:background="@color/amber_300"
             >
 
-            <io.c0nnector.github.tictailcontacts.views.UrlImageView
+            <io.c0nnector.github.tictailcontacts.views.UploadableImage
                 android:id="@+id/imgAvatar"
                 android:layout_width="80dp"
                 android:layout_height="80dp"

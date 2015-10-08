@@ -16,7 +16,7 @@ import dagger.Provides;
 import timber.log.Timber;
 
 @Module(
-        includes = ApiModule.class,
+        includes = {ApiModule.class},
 
         complete = false,
         library = true

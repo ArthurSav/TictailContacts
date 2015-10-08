@@ -227,7 +227,7 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
         Observable.from(contacts)
                 .filter(contact -> contact.getName().contains(query))
                 .toList()
-                .doOnError(Throwable::printStackTrace)
+                .doOnError(throwable -> {})
                 .subscribe(adapter::replace);
     }
 }

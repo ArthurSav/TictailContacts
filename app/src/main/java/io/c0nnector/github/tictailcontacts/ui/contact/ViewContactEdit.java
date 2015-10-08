@@ -1,8 +1,11 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
@@ -11,32 +14,45 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import java.io.File;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.c0nnector.easyoverlay.RelativeOverlay;
 import io.c0nnector.github.tictailcontacts.R;
+import io.c0nnector.github.tictailcontacts.api.imgur.ImageResponse;
+import io.c0nnector.github.tictailcontacts.api.imgur.ImgurService;
+import io.c0nnector.github.tictailcontacts.api.imgur.UploadedImage;
 import io.c0nnector.github.tictailcontacts.api.model.Contact;
 import io.c0nnector.github.tictailcontacts.dialogs.LocationPicker;
+import io.c0nnector.github.tictailcontacts.misc.Dagger;
+import io.c0nnector.github.tictailcontacts.util.IntentData;
+import io.c0nnector.github.tictailcontacts.util.Message;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilAnim;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeOverlay;
+import io.c0nnector.github.tictailcontacts.views.UploadableImage;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
+import io.c0nnector.github.tictailcontacts.views.UtilIntentImage;
 import io.c0nnector.github.tictailcontacts.views.ViewLoader;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorChangeListener;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
+import retrofit.mime.TypedFile;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Contact view, edit user info.
  */
 @SuppressLint("ViewConstructor")
-public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeListener, LocationPicker.LocationChangeListener {
+public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeListener, LocationPicker.LocationChangeListener, UploadableImage.UploadableImageListener {
 
-    /**
-     * Keeps form state
-     */
-    protected boolean isFormValid;
+    Activity activity;
 
     LocationPicker locationPicker;
 
@@ -55,10 +71,11 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
 
     Observable<Boolean> observableLocation;
 
-
+    @Inject
+    ImgurService imgurService;
 
     @Bind(R.id.imgAvatar)
-    UrlImageView imgAvatar;
+    UploadableImage imgAvatar;
 
     @Bind(R.id.vHeader)
     View vHeader;
@@ -93,6 +110,10 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
     @Bind(R.id.btnChange)
     FloatingActionButton btnDone;
 
+    @OnClick(R.id.imgAvatar)
+    public void onImageClick(){
+        imgAvatar.openPickIntent(activity, this);
+    }
 
     /**
      * Constructor
@@ -100,14 +121,17 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
      * @param context
      * @param listener save changes listener
      */
-    public ViewContactEdit(Context context, OnDoneListener listener) {
+    public ViewContactEdit(Context context, OnDoneListener listener, Activity activity) {
         super(context);
 
         if (!isInEditMode()) {
 
+            Dagger.inject(this);
+
             View v = inflate(getContext(), R.layout.content_contact_edit, this);
             ButterKnife.bind(this, v);
 
+            this.activity = activity;
             this.resources = getResources();
             this.btnDone.setOnClickListener(v1 -> listener.onDoneClick(tmpContact));
 
@@ -157,7 +181,7 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
      */
     private void setupForm() {
 
-        formValidation(2).subscribe(isValid -> isFormValid = isValid);
+        formValidation(2).subscribe(isValid -> {});
 
         observeLocationField();
 
@@ -333,6 +357,46 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
         tmpContact.setColor(currentItem.getColor());
     }
 
+    /**
+     * User changed his image
+     * @param imageResponse
+     */
+    private void onImageChanged(ImageResponse imageResponse){
+
+        String url = imageResponse.getData().link;
+
+        if (Strings.isNotBlank(url)) {
+
+            tmpContact.setImage(url);
+            imgAvatar.loadContact(tmpContact);
+        }
+    }
+
+
+    /*****************************************************
+     * ---------------- * Image * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        imgAvatar.onImageResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onImageFile(TypedFile typedFile) {
+
+        imgurService.postImage(typedFile)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnRequest(aLong -> showLoader(""))
+                .doOnError(throwable -> hideLoader())
+                .subscribe(imageResponse -> {
+                    hideLoader();
+                    onImageChanged(imageResponse);
+                });
+    }
+
 
     /*****************************************************
      * ---------------- * Getters * --------------------
@@ -359,4 +423,5 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
         btnDone.setImageResource(R.drawable.ic_add_white_24dp);
         btnDone.setBackgroundTintList(getResources().getColorStateList(R.color.colorAccent));
     }
+
 }

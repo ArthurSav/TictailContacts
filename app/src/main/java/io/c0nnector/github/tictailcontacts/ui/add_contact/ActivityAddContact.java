@@ -2,6 +2,7 @@ package io.c0nnector.github.tictailcontacts.ui.add_contact;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.transition.Slide;
@@ -52,7 +53,7 @@ public class ActivityAddContact extends BaseActivity implements OnDoneListener {
     protected void initVariables() {
         super.initVariables();
 
-        viewContactEdit = new ViewContactEdit(this, this);
+        viewContactEdit = new ViewContactEdit(this, this, this);
         viewContactEdit.showPlusButton();
     }
 
@@ -87,7 +88,8 @@ public class ActivityAddContact extends BaseActivity implements OnDoneListener {
 
         UI.hideKeyboard(this);
 
-        viewContactEdit.formValidation(0).distinctUntilChanged()
+        viewContactEdit.formValidation(0)
+                .distinctUntilChanged()
                 .takeUntil(isValid -> !isValid) //stop observing if the form is invalid
                 .filter(isValid -> isValid) //add user only when the form is valid
 
@@ -115,6 +117,15 @@ public class ActivityAddContact extends BaseActivity implements OnDoneListener {
                         super.onRetrofitError(error);
                     }
                 });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //image selected
+        viewContactEdit.onActivityResult(requestCode, resultCode, data);
     }
 
     /*****************************************************

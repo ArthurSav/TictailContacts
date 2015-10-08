@@ -1,6 +1,7 @@
 package io.c0nnector.github.tictailcontacts.ui.contact;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -77,6 +78,14 @@ public class ActivityContact extends BaseActivity {
         Intents.setResult(this, ViewContacts.RESULT_CONTACT, bundle);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //image selected
+        vContact.viewContactEdit.onActivityResult(requestCode, resultCode, data);
+    }
+
     /*****************************************************
      * ---------------- * Toolbar * --------------------
      *
@@ -102,7 +111,6 @@ public class ActivityContact extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 

@@ -7,10 +7,13 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.c0nnector.github.tictailcontacts.App;
+import io.c0nnector.github.tictailcontacts.api.imgur.ImgurService;
 import io.c0nnector.github.tictailcontacts.ui.add_contact.ActivityAddContact;
 import io.c0nnector.github.tictailcontacts.ui.contact.ViewContact;
+import io.c0nnector.github.tictailcontacts.ui.contact.ViewContactEdit;
 import io.c0nnector.github.tictailcontacts.ui.contacts.ActivityContacts;
 import io.c0nnector.github.tictailcontacts.ui.contacts.ViewContacts;
+import io.c0nnector.github.tictailcontacts.views.UploadableImage;
 import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 
 /**
@@ -19,7 +22,8 @@ import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 @Module(
         includes = {
                 ApiModule.class,
-                DataModule.class
+                DataModule.class,
+                ImgurModule.class
         }
         ,
         injects = {
@@ -28,7 +32,9 @@ import io.c0nnector.github.tictailcontacts.views.UrlImageView;
 
                 ViewContacts.class,
                 UrlImageView.class,
-                ViewContact.class
+                ViewContact.class,
+                UploadableImage.class,
+                ViewContactEdit.class
         }
 )
 public class AppModule {

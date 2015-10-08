@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import dagger.ObjectGraph;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.modules.AppModule;
+import io.c0nnector.github.tictailcontacts.modules.ImgurModule;
 import timber.log.Timber;
 
 

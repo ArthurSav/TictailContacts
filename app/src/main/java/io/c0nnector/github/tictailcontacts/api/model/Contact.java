@@ -29,28 +29,28 @@ import io.c0nnector.github.tictailcontacts.util.Val;
 public class Contact {
 
 
-    private String color;
+     String color;
 
 
-    private String first_name;
+     String first_name;
 
 
-    private String id;
+     String id;
 
 
-    private String image;
+     String image;
 
 
-    private String last_name;
+     String last_name;
 
 
-    private String location;
+     String location;
 
 
-    private String team;
+     String team;
 
 
-    private String title;
+     String title;
 
     public String getColor() {
         return color;
@@ -153,7 +153,7 @@ public class Contact {
         return params;
     }
 
-    private String generateUniqueId() {
+     private String generateUniqueId() {
         return Integer.toString(this.hashCode());
     }
 

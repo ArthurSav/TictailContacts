@@ -79,18 +79,7 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         if (!isInEditMode()) {
 
             Dagger.inject(this);
-
-            setupViews();
         }
-    }
-
-    private void setupViews(){
-
-        //display
-        viewContactDisplay = new ViewContactInfo(getContext(), this);
-
-        //edit
-        viewContactEdit = new ViewContactEdit(getContext(), this);
     }
 
 
@@ -102,8 +91,20 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         this.contact = contact;
         this.activity = activity;
 
+        setupViews();
+
         showDisplayMode();
     }
+
+    private void setupViews(){
+
+        //display
+        viewContactDisplay = new ViewContactInfo(getContext(), this);
+
+        //edit
+        viewContactEdit = new ViewContactEdit(getContext(), this, activity);
+    }
+
 
     /*****************************************************
      * ---------------- * Listeners * --------------------
