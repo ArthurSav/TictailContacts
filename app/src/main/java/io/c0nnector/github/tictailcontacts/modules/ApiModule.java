@@ -11,7 +11,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.c0nnector.github.tictailcontacts.App;
 import io.c0nnector.github.tictailcontacts.BuildConfig;
+import io.c0nnector.github.tictailcontacts.R;
 import io.c0nnector.github.tictailcontacts.api.ApiService;
 import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.util.Strings;
@@ -32,8 +34,8 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Endpoint provideEndpoint(){
-        return Endpoints.newFixedEndpoint(Constants.getServerUrl());
+    Endpoint provideEndpoint(App app){
+        return Endpoints.newFixedEndpoint(app.getString(R.string.base_server_path));
     }
 
 
