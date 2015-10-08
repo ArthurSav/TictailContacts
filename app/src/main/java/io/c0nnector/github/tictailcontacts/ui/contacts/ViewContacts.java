@@ -36,6 +36,7 @@ import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.ui.add_contact.ActivityAddContact;
 import io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact;
 import io.c0nnector.github.tictailcontacts.util.Intents;
+import io.c0nnector.github.tictailcontacts.util.UI;
 import io.c0nnector.github.tictailcontacts.util.UtilRx;
 import io.c0nnector.github.tictailcontacts.util.Val;
 import io.c0nnector.github.tictailcontacts.util.leastview.GridSpacingItemDecoration;
@@ -225,9 +226,14 @@ public class ViewContacts extends BaseRelativeLayout implements ViewSearch.ViewS
         if (Val.isNull(contacts)) return;
 
         Observable.from(contacts)
-                .filter(contact -> contact.getName().contains(query))
+                .filter(contact -> contact.getName().toLowerCase().contains(query))
                 .toList()
                 .doOnError(throwable -> {})
                 .subscribe(adapter::replace);
+    }
+
+    @Override
+    public void onSearchClose() {
+        UI.hideKeyboard(activity);
     }
 }

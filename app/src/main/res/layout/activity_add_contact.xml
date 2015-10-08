@@ -22,6 +22,7 @@
         android:layout_marginTop="@dimen/toolbar_margin_top"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:titleTextColor="@color/white"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 

@@ -82,10 +82,25 @@ public class UrlImageView extends ImageView {
      */
     private String getFilteredUrl(String url) {
 
-        //todo - find a solution for the gravatar issue
-        if (Strings.isNotBlank(url) && url.contains("gravatar")) return "http://klfdnsgfsngkl.com";
+        //todo - check gravatar issue with okhttp
+        url = filterGravatar(url);
 
         return Strings.isBlank(url) ? "http://i.imgur.com/o7q6k5Q.png" : url;
+    }
+
+    /**
+     * There's an issue with okhttp & gravatar/wordpress servers.
+     * At the moment we ignore gravatar images
+     *
+     * Follow issue here https://github.com/square/okhttp/issues/1844
+     * @param url
+     * @return
+     */
+    private String filterGravatar(String url){
+
+        if (Strings.isNotBlank(url) && url.contains("gravatar")) return "http://eaaaaczfr.zx";
+
+        return url;
     }
 
 

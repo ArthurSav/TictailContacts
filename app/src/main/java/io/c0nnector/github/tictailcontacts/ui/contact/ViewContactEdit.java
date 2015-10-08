@@ -43,8 +43,10 @@ import io.c0nnector.github.tictailcontacts.views.color_picker.ColorItem;
 import io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker;
 import retrofit.mime.TypedFile;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Contact view, edit user info.
@@ -388,12 +390,26 @@ public class ViewContactEdit extends BaseRelativeOverlay implements ColorChangeL
     public void onImageFile(TypedFile typedFile) {
 
         imgurService.postImage(typedFile)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnRequest(aLong -> showLoader(""))
-                .doOnError(throwable -> hideLoader())
-                .subscribe(imageResponse -> {
-                    hideLoader();
-                    onImageChanged(imageResponse);
+                .subscribe(new Subscriber<ImageResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoader();
+                        Message.show(getContext(), "Hm. Check your connection");
+                    }
+
+                    @Override
+                    public void onNext(ImageResponse imageResponse) {
+                        hideLoader();
+                        onImageChanged(imageResponse);
+                    }
                 });
     }
 

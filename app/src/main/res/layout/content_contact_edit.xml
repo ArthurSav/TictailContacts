@@ -9,16 +9,16 @@
 
     <RelativeLayout
         android:id="@+id/vWrapper"
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context="io.c0nnector.github.tictailcontacts.ui.contact.ActivityContact">
 
 
         <RelativeLayout
             android:id="@+id/vHeader"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="170dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             tools:background="@color/amber_300"
@@ -35,7 +35,6 @@
                 tools:background="@drawable/shape_image_round_placeholder"/>
 
         </RelativeLayout>
-
 
 
         <RelativeLayout
@@ -69,8 +68,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="First name"
-                        android:textSize="15sp"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:textSize="15sp"/>
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -90,8 +89,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
                         android:hint="Last name"
-                        android:textSize="15sp"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:textSize="15sp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -111,9 +110,9 @@
                 android:id="@+id/layoutTxtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vName"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/vName">
 
                 <EditText
                     android:id="@+id/txtEditTitle"
@@ -121,9 +120,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:hint="Title"
+                    android:inputType="text"
                     android:minWidth="150dp"
-                    android:textSize="15sp"
-                    android:inputType="text"/>
+                    android:textSize="15sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -131,9 +130,9 @@
                 android:id="@+id/layoutTxtEditTeam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutTxtTitle"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutTxtTitle"
                 android:layout_marginTop="10dp">
 
                 <EditText
@@ -142,9 +141,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:hint="Team"
+                    android:inputType="text"
                     android:minWidth="150dp"
-                    android:textSize="15sp"
-                    android:inputType="text"/>
+                    android:textSize="15sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -152,16 +151,16 @@
                 android:id="@+id/layoutTxtEditLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutTxtEditTeam"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutTxtEditTeam"
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:editable="false"
                     android:id="@+id/txtEditLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:editable="false"
                     android:fontFamily="sans-serif-light"
                     android:hint="Location"
                     android:minWidth="150dp"
@@ -176,11 +175,11 @@
                 android:layout_centerHorizontal="true">
 
                 <io.c0nnector.github.tictailcontacts.views.color_picker.ColorPicker
+                    android:id="@+id/vColorPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/vColorPicker"
-                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="25dp"/>
             </RelativeLayout>
 
@@ -191,15 +190,15 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnChange"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
         android:clickable="true"
-        app:backgroundTint="@color/green_400"
         android:src="@drawable/ic_done_white_36dp"
+        app:backgroundTint="@color/green_400"
         app:layout_anchor="@id/vHeader"
         app:layout_anchorGravity="bottom|right|end"/>
 

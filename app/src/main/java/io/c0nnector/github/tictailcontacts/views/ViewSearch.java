@@ -44,14 +44,17 @@ public class ViewSearch extends BaseRelativeLayout {
     public void onBtnClose(){
 
         //hide view only when there's no text
-        if (Strings.isBlank(txtSearch.getText())) hide();
+        if (Strings.isBlank(txtSearch.getText().toString())) {
+            listener.onSearchClose();
+            hide();
+        }
 
         else clear();
     }
 
     @OnTextChanged(R.id.txtSearch)
     public void onTextChanged(CharSequence text){
-        listener.onTextSearch(text.toString());
+        listener.onTextSearch(text.toString().toLowerCase());
     }
 
     public ViewSearch(Context context, AttributeSet attrs) {
@@ -90,5 +93,6 @@ public class ViewSearch extends BaseRelativeLayout {
 
     public interface ViewSearchListener{
         void onTextSearch(String query);
+        void onSearchClose();
     }
 }
