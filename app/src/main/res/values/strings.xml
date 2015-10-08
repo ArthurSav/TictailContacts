@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tictail Contacts</string>
+    <string name="app_name">Contacts</string>
     <string name="action_search">Settings</string>
     <string name="title_activity_activity_contact">Contact</string>
 
