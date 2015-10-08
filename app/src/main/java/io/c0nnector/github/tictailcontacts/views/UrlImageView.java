@@ -81,7 +81,7 @@ public class UrlImageView extends ImageView {
      * @param url
      */
     private String getFilteredUrl(String url) {
-        return Strings.isBlank(url) ? "http://i.imgur.com/o7q6k5Q.png" : url;
+        return Strings.isBlank(url) ? Constants.URL_DUMMY_PHOTO : url;
     }
 
     /*****************************************************

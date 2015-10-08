@@ -15,6 +15,8 @@ public class Constants {
     public static final int DIMEN_IMAGE_CONTACT = 120; //dp
 
 
+    public static final String URL_DUMMY_PHOTO = "http://i.imgur.com/o7q6k5Q.png";
+
     /*****************************************************
      * ---------------- * Messages * --------------------
      *
@@ -26,7 +28,7 @@ public class Constants {
 
 
     /*****************************************************
-     * ---------------- * Server * --------------------
+     * ---------------- * Host * --------------------
      *
      *
      *
@@ -38,5 +40,16 @@ public class Constants {
     public static String getServerUrl(){
         return BASE_URL;
     }
+
+
+    /*****************************************************
+     * ---------------- * Imgur * --------------------
+     *
+     *
+     *
+     ****************************************************/
+
+    public static final String IMGUR_PATH = "https://api.imgur.com";
+    public static final String IMGUR_CLIENT_ID = "e693aa33140bb81";
 
 }

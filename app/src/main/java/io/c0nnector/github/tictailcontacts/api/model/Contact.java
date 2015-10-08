@@ -14,6 +14,7 @@ import org.parceler.Parcel;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.util.Strings;
 import io.c0nnector.github.tictailcontacts.util.UtilColor;
 import io.c0nnector.github.tictailcontacts.util.Val;
@@ -29,28 +30,28 @@ import io.c0nnector.github.tictailcontacts.util.Val;
 public class Contact {
 
 
-     String color;
+    String color;
 
 
-     String first_name;
+    String first_name;
 
 
-     String id;
+    String id;
 
 
-     String image;
+    String image;
 
 
-     String last_name;
+    String last_name;
 
 
-     String location;
+    String location;
 
 
-     String team;
+    String team;
 
 
-     String title;
+    String title;
 
     public String getColor() {
         return color;
@@ -141,20 +142,16 @@ public class Contact {
 
         Map<String, String> params = new HashMap<>();
 
-        params.put("id", Strings.isNotBlank(id) ? id : generateUniqueId());
+        params.put("id", id);
         params.put("first_name", first_name);
         params.put("last_name", last_name);
-        params.put("image", Strings.isNotBlank(image) ? image : "http://23ddf3rr5.com/"); //todo - change this
+        params.put("image", Strings.isNotBlank(image) ? image : Constants.URL_DUMMY_PHOTO); // allow empty urls
         params.put("location", location);
         params.put("team", team);
         params.put("title", title);
         params.put("color", color);
 
         return params;
-    }
-
-     private String generateUniqueId() {
-        return Integer.toString(this.hashCode());
     }
 
     public boolean equals(Contact contact) {

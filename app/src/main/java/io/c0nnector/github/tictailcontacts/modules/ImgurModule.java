@@ -7,6 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import io.c0nnector.github.tictailcontacts.BuildConfig;
 import io.c0nnector.github.tictailcontacts.api.imgur.ImgurService;
+import io.c0nnector.github.tictailcontacts.misc.Constants;
 import retrofit.Endpoint;
 import retrofit.Endpoints;
 import retrofit.RequestInterceptor;
@@ -18,23 +19,18 @@ import retrofit.RestAdapter;
 )
 public class ImgurModule {
 
-
-    public static final String PATH = "https://api.imgur.com";
-    public static final String IMGUR_CLIENT_ID = "e693aa33140bb81";
-
-
     @Provides
     @Singleton
     @Named("imgur")
     Endpoint provideEndpoint(){
-        return Endpoints.newFixedEndpoint(PATH);
+        return Endpoints.newFixedEndpoint(Constants.IMGUR_PATH);
     }
 
     @Provides
     @Singleton
     @Named("imgur")
     RequestInterceptor provideInterceptor(){
-        return request ->  request.addHeader("Authorization"," Client-ID "+ IMGUR_CLIENT_ID);
+        return request ->  request.addHeader("Authorization"," Client-ID " + Constants.IMGUR_CLIENT_ID);
     }
 
     @Provides

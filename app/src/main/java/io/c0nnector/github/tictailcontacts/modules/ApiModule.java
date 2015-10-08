@@ -1,6 +1,8 @@
 package io.c0nnector.github.tictailcontacts.modules;
 
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Protocol;
@@ -31,13 +33,11 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 )
 public class ApiModule {
 
-
     @Provides
     @Singleton
-    Endpoint provideEndpoint(App app){
+    Endpoint provideEndpoint(Application app){
         return Endpoints.newFixedEndpoint(app.getString(R.string.base_server_path));
     }
-
 
     @Provides
     @Singleton
