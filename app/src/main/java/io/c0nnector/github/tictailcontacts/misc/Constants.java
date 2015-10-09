@@ -15,6 +15,9 @@ public class Constants {
     public static final int DIMEN_IMAGE_CONTACT = 120; //dp
 
 
+    /**
+     * Default photo used when original fails
+     */
     public static final String URL_DUMMY_PHOTO = "http://i.imgur.com/o7q6k5Q.png";
 
     /*****************************************************
@@ -25,22 +28,6 @@ public class Constants {
      ****************************************************/
 
     public static final String ERROR_NETWORK = "Network error";
-
-
-    /*****************************************************
-     * ---------------- * Host * --------------------
-     *
-     *
-     *
-     ****************************************************/
-
-    private static final String BASE_URL = "http://192.168.1.4:5000";
-    private static final String BASE_URL2 = "http://192.168.10.74:5000";
-
-    public static String getServerUrl(){
-        return BASE_URL;
-    }
-
 
     /*****************************************************
      * ---------------- * Imgur * --------------------
