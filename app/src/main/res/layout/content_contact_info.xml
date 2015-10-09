@@ -34,6 +34,14 @@
                 android:transitionName="@string/transitionImage"
                 tools:background="@drawable/shape_image_round_placeholder"/>
 
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/ic_photo_camera_white_18dp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
 
         </RelativeLayout>
 
