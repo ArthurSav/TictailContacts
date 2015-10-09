@@ -52,6 +52,10 @@ public class ActivityContact extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (vContact.exitOnBackPressed()) super.onBackPressed();
+    }
 
     @Override
     public void supportFinishAfterTransition() {

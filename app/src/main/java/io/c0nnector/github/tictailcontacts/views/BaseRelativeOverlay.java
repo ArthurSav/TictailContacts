@@ -2,7 +2,11 @@ package io.c0nnector.github.tictailcontacts.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
+import java.util.Iterator;
 
 import butterknife.ButterKnife;
 import io.c0nnector.easyoverlay.RelativeOverlay;

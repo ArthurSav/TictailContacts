@@ -5,6 +5,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import io.c0nnector.github.tictailcontacts.R;
@@ -72,7 +74,6 @@ public final class UtilView {
         if (v!=null) v.setVisibility(View.GONE);
     }
 
-
     /**
      * Toggles the visibility of any given number of views
      * @param views
@@ -88,7 +89,6 @@ public final class UtilView {
             }
         }
     }
-
 
     /**
      * Makes a view invisible
@@ -124,6 +124,32 @@ public final class UtilView {
      */
     public static boolean isInvisible(View v) {
         return v.getVisibility() == View.INVISIBLE;
+    }
+
+
+    /**
+     * Checks for a specific view class inside a group view
+     * @param view
+     * @param viewClass
+     * @return
+     */
+    public static boolean containsView(ViewGroup view, Class viewClass) {
+
+        int size = view.getChildCount();
+
+        if(size > 0) {
+
+            for (int i = 0; i < size; i++) {
+
+                View v = view.getChildAt(i);
+
+                if(viewClass.isInstance(v)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /*****************************************************

@@ -24,6 +24,7 @@ import io.c0nnector.github.tictailcontacts.misc.Constants;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.util.Message;
 import io.c0nnector.github.tictailcontacts.util.UI;
+import io.c0nnector.github.tictailcontacts.util.UtilView;
 import io.c0nnector.github.tictailcontacts.views.BaseRelativeOverlay;
 import retrofit.RetrofitError;
 import rx.android.schedulers.AndroidSchedulers;
@@ -105,6 +106,7 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         viewContactEdit = new ViewContactEdit(getContext(), this, activity);
     }
 
+    public void onBackpressed(){}
 
     /*****************************************************
      * ---------------- * Listeners * --------------------
@@ -171,6 +173,10 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         TransitionManager.go(sceneDisplay, getBoundsTransition());
     }
 
+    public boolean isEditView(){
+        return UtilView.containsView(frameLayout, ViewContactEdit.class);
+    }
+
     private Transition getBoundsTransition(){
 
         Transition transition = new ChangeBounds();
@@ -178,6 +184,22 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         transition.setInterpolator(new AccelerateDecelerateInterpolator());
 
         return transition;
+    }
+
+    /**
+     * Don't exit if in edit mode, return to display mode first
+     * @return
+     */
+    public boolean exitOnBackPressed(){
+
+        if (isEditView()) {
+
+            showDisplayMode();
+
+            return false;
+        }
+
+        return true;
     }
 
     /*****************************************************
