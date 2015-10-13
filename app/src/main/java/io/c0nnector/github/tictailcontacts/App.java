@@ -6,11 +6,11 @@ import android.support.annotation.NonNull;
 import dagger.ObjectGraph;
 import io.c0nnector.github.tictailcontacts.misc.Dagger;
 import io.c0nnector.github.tictailcontacts.modules.AppModule;
-import io.c0nnector.github.tictailcontacts.modules.ImgurModule;
 import timber.log.Timber;
 
 
 public class App extends Application {
+
 
     private ObjectGraph objectGraph;
 
@@ -36,12 +36,9 @@ public class App extends Application {
 
     /*****************************************************
      * ---------------- * Logs * --------------------
-     *
-     *
-     *
      ****************************************************/
 
-    private void setupLog(){
+    private void setupLog() {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
@@ -57,9 +54,10 @@ public class App extends Application {
 
     /**
      * Dagger graph setup
+     *
      * @see Dagger for graph injection
      */
-    private void setupGraph(){
+    private void setupGraph() {
         objectGraph = ObjectGraph.create(new AppModule(this));
     }
 

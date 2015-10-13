@@ -31,7 +31,6 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class ActivityAddContact extends BaseActivity implements OnDoneListener {
 
-
     ViewContactEdit viewContactEdit;
 
     @Inject

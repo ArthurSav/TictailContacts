@@ -11,12 +11,13 @@ import android.view.WindowManager;
  */
 public final class Measure {
 
+
     private static int screenWidth;
 
     private static int screenHeight;
 
 
-    private Measure(){
+    private Measure() {
         //no instances
     }
 
@@ -31,6 +32,7 @@ public final class Measure {
      * Converts dp to pixels
      *
      * @param dp
+     *
      * @return
      */
     public static int dpToPx(int dp) {
@@ -46,10 +48,12 @@ public final class Measure {
 
     /**
      * Screen dimensions
+     *
      * @param context
+     *
      * @return
      */
-    private static Point getScreenDimensions(Context context){
+    private static Point getScreenDimensions(Context context) {
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();

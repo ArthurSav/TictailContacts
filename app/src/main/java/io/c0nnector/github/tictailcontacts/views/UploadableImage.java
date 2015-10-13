@@ -26,6 +26,7 @@ import retrofit.mime.TypedFile;
  */
 public class UploadableImage extends UrlImageView {
 
+
     private UploadableImageListener listener;
 
 
@@ -40,18 +41,19 @@ public class UploadableImage extends UrlImageView {
         getPicasso().cancelRequest(target);
     }
 
-    public void openPickIntent(Activity activity, UploadableImageListener listener){
+    public void openPickIntent(Activity activity, UploadableImageListener listener) {
         this.listener = listener;
         IntentData.chooseFileIntent(activity);
     }
 
     /**
      * Call it in your activity's onActivityResult. Handles image pick
+     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
-    public void onImageResult(int requestCode, int resultCode, Intent data){
+    public void onImageResult(int requestCode, int resultCode, Intent data) {
 
         Uri returnUri;
 
@@ -89,9 +91,10 @@ public class UploadableImage extends UrlImageView {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-             File resizedFile = saveImageToFile(bitmap);
+            File resizedFile = saveImageToFile(bitmap);
 
-            if (Val.notNull(resizedFile)) listener.onImageFile(new TypedFile("image/jpeg", resizedFile));
+            if (Val.notNull(resizedFile))
+                listener.onImageFile(new TypedFile("image/jpeg", resizedFile));
         }
 
         @Override
@@ -107,23 +110,25 @@ public class UploadableImage extends UrlImageView {
 
     /**
      * Save bitmap to local storage
+     *
      * @param bitmap
+     *
      * @return
      */
-    private File saveImageToFile(Bitmap bitmap){
+    private File saveImageToFile(Bitmap bitmap) {
 
         File tmp;
 
         try {
 
             //try to save in cache dir
-             tmp = File.createTempFile("tmp_"+System.currentTimeMillis(), ".png", getContext().getCacheDir());
+            tmp = File.createTempFile("tmp_" + System.currentTimeMillis(), ".png", getContext().getCacheDir());
 
         } catch (IOException e) {
             e.printStackTrace();
 
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-            tmp = new File(dir, System.currentTimeMillis()+ "_resize.png");
+            tmp = new File(dir, System.currentTimeMillis() + "_resize.png");
         }
 
         FileOutputStream fOut;
@@ -152,6 +157,7 @@ public class UploadableImage extends UrlImageView {
 
         /**
          * Called after we get a file path of the resized image the user picked
+         *
          * @param typedFile
          */
         void onImageFile(TypedFile typedFile);

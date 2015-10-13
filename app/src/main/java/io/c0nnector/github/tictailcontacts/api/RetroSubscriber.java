@@ -19,6 +19,7 @@ public abstract class RetroSubscriber<T> extends Subscriber<T> {
         RetrofitError error = convertToRetrofitError(e);
 
         if (Val.notNull(error)) onRetrofitError(error);
+
     }
 
     /**

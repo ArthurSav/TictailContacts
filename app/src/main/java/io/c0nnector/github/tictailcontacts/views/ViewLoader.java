@@ -14,6 +14,7 @@ import io.c0nnector.github.tictailcontacts.R;
  */
 public class ViewLoader extends RelativeLayout {
 
+
     @Bind(R.id.txtMessage)
     TextView txtMessage;
 
@@ -27,7 +28,7 @@ public class ViewLoader extends RelativeLayout {
         }
     }
 
-    public ViewLoader setMessage(String text){
+    public ViewLoader setMessage(String text) {
         txtMessage.setText(text);
         return this;
     }

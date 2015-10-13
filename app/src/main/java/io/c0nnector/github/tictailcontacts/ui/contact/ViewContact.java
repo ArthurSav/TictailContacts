@@ -106,8 +106,6 @@ public class ViewContact extends BaseRelativeOverlay implements OnDoneListener,E
         viewContactEdit = new ViewContactEdit(getContext(), this, activity);
     }
 
-    public void onBackpressed(){}
-
     /*****************************************************
      * ---------------- * Listeners * --------------------
      *
